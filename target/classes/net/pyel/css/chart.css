@@ -1,0 +1,53 @@
+/* Style for the bar chart background */
+.chart {
+    -fx-background-color: white;
+}
+
+/* Default bar color, can be omitted if you set specific colors for each series */
+.chart-bar {
+    -fx-bar-fill: #c0c0c0; /* This is a light grey color */
+}
+
+
+/* Style for the chart plot background */
+.chart-plot-background {
+    -fx-background-color: white;
+}
+
+/* Style for the chart legend items */
+.chart-legend-item-symbol {
+    -fx-background-radius: 2;
+    -fx-padding: 5;
+}
+
+/* Optional: Style for the axis */
+.axis {
+    -fx-tick-label-fill: black;
+    -fx-tick-mark-visible: true;
+    -fx-tick-label-font-size: 10px;
+}
+
+/* Specific colors for each data series with transparency */
+.default-color0.chart-bar {
+    -fx-bar-fill: rgba(255, 0, 0, 0.6); /* Red with 60% opacity */
+}
+
+.default-color1.chart-bar {
+    -fx-bar-fill: rgba(43, 182, 43, 0.6); /* Green with 60% opacity */
+}
+
+.default-color2.chart-bar {
+    -fx-bar-fill: rgba(0, 0, 255, 0.6);
+}
+
+.default-color3.chart-bar {
+    -fx-bar-fill: rgba(255, 0, 0, 0.6); /* Red with 60% opacity */
+}
+
+.default-color4.chart-bar {
+    -fx-bar-fill: rgba(43, 182, 43, 0.6); /* Green with 60% opacity */
+}
+
+.default-color5.chart-bar {
+    -fx-bar-fill: rgba(0, 0, 255, 0.6);
+}

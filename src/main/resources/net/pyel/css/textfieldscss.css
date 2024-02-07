@@ -1,0 +1,60 @@
+.text-field {
+    -fx-background-color: RGBA(0,0,0,0.5);
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+    -fx-padding: 3 3 3 3;
+    -fx-text-inner-color: white;
+}
+
+.text-field:focused {
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+    -fx-background-color: RGBA(0,0,0,0.5);
+}
+
+.text-area {
+    -fx-background-color: RGBA(0,0,0,0.5);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0;
+    -fx-padding: 3 3 3 3;
+    -fx-text-inner-color: white;
+}
+
+.text-area .prompt-text-fill {
+    -fx-fill: rgba(0,0,0,0); /* Lighter color for the placeholder text */
+}
+
+
+.text-area .text {
+    -fx-fill: RGBA(0,0,0,0.0); /* Change to desired text color */
+}
+
+.text-area:focused {
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0;
+    -fx-background-color: RGBA(0,0,0,0.5);
+}
+
+.text-area .content {
+    -fx-background-color: RGBA(0,0,0,0.0);
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: RGBA(0,0,0,0.0);
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: RGBA(0,0,0,0.0);
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: RGBA(0,0,0,0.0); /* Background color of the content area */
+}
+
+.text-area .prompt-text-fill {
+    -fx-fill: RGBA(0,0,0,0.0); /* Lighter color for the placeholder text */
+}
+
+
+
+

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="620.0" prefWidth="1024.0" style="-fx-background-color: #ff8000;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.pyel.BaseController">
+    <children>
+        <MenuBar style="-fx-background-color: #ff2200;" VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newPanel" text="New" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadPanel" text="Load" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="Close" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="Save" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openHelpMenu" text="About GP (Game Panel)" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane prefHeight="593.0" prefWidth="1014.0" stylesheets="@Game_Machines/smp.css">
+            <children>
+                <Button alignment="CENTER" layoutX="701.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#newPanel" prefHeight="56.0" prefWidth="117.0" stylesheets="@Game_Machines/smp.css" text="New" textFill="WHITE">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" layoutX="845.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#loadPanel" prefHeight="56.0" prefWidth="117.0" text="Load" textFill="WHITE">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Button>
+                <ImageView fitHeight="620.0" fitWidth="731.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@img/login.png" />
+                    </image>
+                </ImageView>
+                <TextField fx:id="handler" layoutX="732.0" layoutY="329.0" prefHeight="47.0" prefWidth="201.0" promptText="Staff" style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                    <font>
+                        <Font name="Monospaced Regular" size="18.0" />
+                    </font>
+                </TextField>
+                <Text fill="WHITE" layoutX="759.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alpha Edition">
+                    <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="732.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.0.1-alpha">
+                    <font>
+                        <Font name="Monospaced Regular" size="15.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="733.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Identification" />
+                <Text fill="#ffaf3f" fontSmoothingType="LCD" layoutX="732.0" layoutY="389.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Will be used for logging events">
+                    <font>
+                        <Font size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#f2f2f2" layoutX="644.0" layoutY="571.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need Help?">
+                    <font>
+                        <Font name="Monospaced Regular" size="19.0" />
+                    </font>
+                </Text>
+                <Text fx:id="openHelpCentre" fill="WHITE" layoutX="644.0" layoutY="588.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Open the help centre" />
+                <Text fill="WHITE" layoutX="739.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GAME">
+                    <font>
+                        <Font name="Dhurjati" size="79.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="816.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PANEL">
+                    <font>
+                        <Font name="Gargi" size="37.0" />
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

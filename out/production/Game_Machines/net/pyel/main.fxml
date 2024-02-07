@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox prefHeight="720.0" prefWidth="1400.0" style="-fx-background-color: #11182b;"
+      xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.pyel.BaseController">
+    <children>
+        <MenuBar style="-fx-background-color: #8ad3ff;" VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newPanel" text="New/Reset"/>
+                        <MenuItem mnemonicParsing="false" onAction="#loadData" text="Load"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#basePanel" text="Close"/>
+                        <MenuItem mnemonicParsing="false" onAction="#saveData" text="Save"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#logTerminal" text="Log"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" text="Quit"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#openHelpMenu"
+                                  text="About SMP (Shipping Management Panel)"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Facilities">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#logTerminal" text="Terminal"/>
+                        <MenuItem mnemonicParsing="false" onAction="#newPanel" text="Reset"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Debug">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#refresh" text="Refresh"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane minHeight="860.0" prefWidth="1100.0" stylesheets="@Game_Machines/smp.css">
+            <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="860.0" prefWidth="1100.0"
+                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                            AnchorPane.topAnchor="0.0">
+                    <children>
+                        <AnchorPane layoutX="318.0" layoutY="560.0" prefHeight="860.0" prefWidth="461.0"
+                                    style="-fx-background-color: #1c2640;" AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <ListView fx:id="dockedShipListView" layoutX="241.0" layoutY="237.0" prefHeight="462.0"
+                                          prefWidth="210.0" style="-fx-background-color: #6589eb;"
+                                          stylesheets="@css/stylesheet.css" AnchorPane.bottomAnchor="13.0"
+                                          AnchorPane.leftAnchor="241.0" AnchorPane.rightAnchor="10.0"
+                                          AnchorPane.topAnchor="385.0">
+                                    <contextMenu>
+                                        <ContextMenu>
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#removeShipFromPort"
+                                                          text="Delete Ship"/>
+                                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#unDockShipFromPort"
+                                                          text="Undock Ship"/>
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                </ListView>
+                                <ImageView fx:id="imgShipDocked" fitHeight="137.0" fitWidth="99.0" layoutX="243.0"
+                                           layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/cargo-ship.png"/>
+                                    </image>
+                                </ImageView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="333.0" layoutY="352.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Docked ships" textAlignment="RIGHT"
+                                      wrappingWidth="116.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="22.0"/>
+                                    </font>
+                                </Text>
+                                <ImageView fx:id="imgShipOnSea" fitHeight="99.0" fitWidth="99.0" layoutX="14.0"
+                                           layoutY="294.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/shipping.png"/>
+                                    </image>
+                                </ImageView>
+                                <ListView fx:id="shipListView" disable="true" layoutX="14.0" layoutY="385.0"
+                                          prefHeight="462.0" prefWidth="214.0" style="-fx-background-color: #6589eb;"
+                                          stylesheets="@css/stylesheet.css" AnchorPane.bottomAnchor="13.0"
+                                          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="237.0"
+                                          AnchorPane.topAnchor="385.0">
+                                    <contextMenu>
+                                        <ContextMenu>
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#removeShipFromSea"
+                                                          text="Delete Ship"/>
+                                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#dockShipToPort"
+                                                          text="Dock Ship"/>
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                </ListView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="125.0" layoutY="352.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Ships on sea" textAlignment="RIGHT"
+                                      wrappingWidth="99.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="22.0"/>
+                                    </font>
+                                </Text>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="23.0" layoutY="47.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Ship">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="34.0"/>
+                                    </font>
+                                </Text>
+                                <Text fx:id="shipIDInfo" fill="#ff9d57" fontSmoothingType="LCD" layoutX="23.0"
+                                      layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="18.0"/>
+                                    </font>
+                                </Text>
+                                <TextField fx:id="shipNameBox" layoutX="16.0" layoutY="95.0" prefHeight="0.0"
+                                           prefWidth="195.0" promptText="Ship name"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <TextField fx:id="shipIDBox" layoutX="16.0" layoutY="148.0" prefHeight="0.0"
+                                           prefWidth="195.0" promptText="Ship code"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: orange;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Button layoutX="367.0" layoutY="286.0" mnemonicParsing="false"
+                                        onMouseClicked="#deselectShip" prefHeight="20.0" prefWidth="82.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Deselect">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="13.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="295.0" layoutY="233.0" mnemonicParsing="false"
+                                        onMouseClicked="#addShip" prefHeight="40.0" prefWidth="156.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Add to Port">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <TextField fx:id="shipURLBox" layoutX="241.0" layoutY="102.0" prefHeight="0.0"
+                                           prefWidth="210.0" promptText="Photo URL"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="12.0"/>
+                                    </font>
+                                </TextField>
+                                <Pane layoutX="241.0" layoutY="126.0"/>
+                                <ToggleButton fx:id="toggleShipButton" layoutX="245.0" layoutY="14.0"
+                                              mnemonicParsing="false" onMouseClicked="#toggleShip"
+                                              style="-fx-background-color: #ff4d02;" text="Selected mode: PORT"
+                                              textFill="WHITE">
+                                    <font>
+                                        <Font name="Ubuntu Mono" size="15.0"/>
+                                    </font>
+                                </ToggleButton>
+                                <TextField fx:id="shipCountryBox" layoutX="16.0" layoutY="195.0" prefHeight="31.0"
+                                           prefWidth="95.0" promptText="Alpha-2"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: yellow;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="16.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Ship country code*"/>
+                                <Text fill="WHITE" layoutX="16.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Ship code*"/>
+                                <Text fill="WHITE" layoutX="16.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Ship name*"/>
+                                <Text fill="WHITE" layoutX="241.0" layoutY="100.0" strokeType="OUTSIDE"
+                                      strokeWidth="0.0" text="Ship photo URL"/>
+                                <Button layoutX="14.0" layoutY="233.0" mnemonicParsing="false"
+                                        onMouseClicked="#addShipToSea" prefHeight="40.0" prefWidth="156.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Add to Sea">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="333.0" layoutY="179.0" mnemonicParsing="false"
+                                        onMouseClicked="#updateShip" prefHeight="12.0" prefWidth="116.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Update">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <ImageView fx:id="shipImage" fitHeight="47.0" fitWidth="68.0" layoutX="143.0"
+                                           layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <viewport>
+                                        <Rectangle2D/>
+                                    </viewport>
+                                </ImageView>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="1170.0" layoutY="92.0" prefHeight="860.0" prefWidth="230.0"
+                                    style="-fx-background-color: #253357;" AnchorPane.bottomAnchor="0.0"
+                                    AnchorPane.leftAnchor="1170.0" AnchorPane.rightAnchor="0.0"
+                                    AnchorPane.topAnchor="0.0">
+                            <children>
+                                <ListView fx:id="portListView" layoutX="-9.0" layoutY="385.0" prefHeight="462.0"
+                                          prefWidth="210.0" style="-fx-background-color: #6589eb;"
+                                          stylesheets="@css/stylesheet.css" AnchorPane.bottomAnchor="13.0"
+                                          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <contextMenu>
+                                        <ContextMenu>
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#removePort"
+                                                          text="Delete Port"/>
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                </ListView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="10.0" layoutY="371.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Ports" textAlignment="RIGHT"
+                                      wrappingWidth="210.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="22.0"/>
+                                    </font>
+                                </Text>
+                                <ImageView fitHeight="137.0" fitWidth="99.0" layoutX="10.0" layoutY="286.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/crane.png"/>
+                                    </image>
+                                </ImageView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="46.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Port">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="34.0"/>
+                                    </font>
+                                </Text>
+                                <ImageView fx:id="portFlag" fitHeight="91.0" fitWidth="74.0" layoutX="146.0"
+                                           layoutY="13.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/flags/hu.png"/>
+                                    </image>
+                                </ImageView>
+                                <Text fx:id="portIDInfo" fill="#ffb92b" fontSmoothingType="LCD" layoutX="16.0"
+                                      layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="18.0"/>
+                                    </font>
+                                </Text>
+                                <TextField fx:id="portNameBox" layoutX="18.0" layoutY="93.0" prefHeight="24.0"
+                                           prefWidth="195.0" promptText="Port name"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <TextField fx:id="portIDBox" layoutX="18.0" layoutY="145.0" prefHeight="3.0"
+                                           prefWidth="195.0" promptText="Port code"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: orange;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Button fx:id="popUpAddAddButton1" layoutX="96.0" layoutY="237.0"
+                                        mnemonicParsing="false" onMouseClicked="#updatePort" prefHeight="12.0"
+                                        prefWidth="116.0" style="-fx-background-color: #8ad3ff;" text="Update">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="130.0" layoutY="286.0" mnemonicParsing="false"
+                                        onMouseClicked="#deselectPort" prefHeight="20.0" prefWidth="82.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Deselect">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="13.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="18.0" layoutY="237.0" mnemonicParsing="false" onMouseClicked="#addPort"
+                                        prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8ad3ff;"
+                                        text="Add">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <Text fill="WHITE" layoutX="18.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Port name*"/>
+                                <Text fill="WHITE" layoutX="18.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Port code*"/>
+                                <TextField fx:id="portCountryBox" layoutX="18.0" layoutY="198.0" prefHeight="31.0"
+                                           prefWidth="95.0" promptText="Alpha-2"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: yellow;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="18.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Port country code*"/>
+                                <Text fx:id="alpha2error" fill="RED" layoutX="119.0" layoutY="217.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0"/>
+                                <ImageView fitHeight="134.0" fitWidth="106.0" layoutX="118.0" layoutY="-6.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/transparent_ondark.png"/>
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="249.0" prefHeight="860.0" prefWidth="461.0"
+                                    style="-fx-background-color: #182036;">
+                            <children>
+                                <ListView fx:id="containerListView" disable="true" layoutX="-9.0" layoutY="385.0"
+                                          prefHeight="302.0" prefWidth="210.0" style="-fx-background-color: #6589eb;"
+                                          stylesheets="@css/stylesheet.css" AnchorPane.bottomAnchor="173.0"
+                                          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="241.0">
+                                    <contextMenu>
+                                        <ContextMenu>
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#removeContainerFromShip"
+                                                          text="Delete Container"/>
+                                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#unloadContainerFromShip"
+                                                          text="Unload Container"/>
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                </ListView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="88.0" layoutY="356.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Containers on ship"
+                                      textAlignment="RIGHT" wrappingWidth="132.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="20.0"/>
+                                    </font>
+                                </Text>
+                                <ImageView fx:id="imgContainersOnShip" fitHeight="80.0" fitWidth="82.0" layoutX="10.0"
+                                           layoutY="305.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/containers.png"/>
+                                    </image>
+                                </ImageView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="46.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Container">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="34.0"/>
+                                    </font>
+                                </Text>
+                                <Text fx:id="containerIDInfo" fill="#ffb92b" fontSmoothingType="LCD" layoutX="14.0"
+                                      layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="18.0"/>
+                                    </font>
+                                </Text>
+                                <Button fx:id="popUpAddAddutton11" layoutX="329.0" layoutY="182.0"
+                                        mnemonicParsing="false" onMouseClicked="#updateContainer" prefHeight="12.0"
+                                        prefWidth="116.0" style="-fx-background-color: #8ad3ff;" text="Update">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="363.0" layoutY="287.0" mnemonicParsing="false"
+                                        onMouseClicked="#deselectContainer" prefHeight="20.0" prefWidth="82.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Deselect">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="13.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="18.0" layoutY="237.0" mnemonicParsing="false"
+                                        onMouseClicked="#addContainer" prefHeight="40.0" prefWidth="156.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Add to Ship">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <ListView fx:id="dockedContainerListView" layoutX="237.0" layoutY="385.0"
+                                          prefHeight="302.0" prefWidth="210.0" style="-fx-background-color: #6589eb;"
+                                          stylesheets="@css/stylesheet.css">
+                                    <contextMenu>
+                                        <ContextMenu>
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#removeContainerFromPort"
+                                                          text="Delete Container"/>
+                                                <SeparatorMenuItem mnemonicParsing="false"/>
+                                                <MenuItem mnemonicParsing="false" onAction="#loadContainerToShip"
+                                                          text="Load Container"/>
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                </ListView>
+                                <ImageView fx:id="imgContainersOnShore" fitHeight="80.0" fitWidth="95.0" layoutX="237.0"
+                                           layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/cargo-on-shore.png"/>
+                                    </image>
+                                </ImageView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="315.0" layoutY="356.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Containers on shore"
+                                      textAlignment="RIGHT" wrappingWidth="132.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="20.0"/>
+                                    </font>
+                                </Text>
+                                <Button layoutX="282.0" layoutY="237.0" mnemonicParsing="false"
+                                        onMouseClicked="#addContainerOnShore" prefHeight="40.0" prefWidth="162.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Add to Port">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <ToggleButton fx:id="toggleContainerButton" layoutX="247.0" layoutY="14.0"
+                                              mnemonicParsing="false" onMouseClicked="#toggleContainer"
+                                              style="-fx-background-color: #ff4d02;" text="Selected mode: PORT"
+                                              textFill="WHITE">
+                                    <font>
+                                        <Font name="Ubuntu Mono" size="15.0"/>
+                                    </font>
+                                </ToggleButton>
+                                <TextField fx:id="containerIDBox" layoutX="18.0" layoutY="104.0" prefHeight="0.0"
+                                           prefWidth="195.0" promptText="Container ID"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="18.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Container ID*"/>
+                                <Text fill="WHITE" layoutX="18.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Length*"/>
+                                <ToggleButton fx:id="length10toggle" layoutX="18.0" layoutY="157.0"
+                                              mnemonicParsing="false" onMouseClicked="#length10Toggle"
+                                              stylesheets="@css/toggle.css" text="10" textFill="WHITE"/>
+                                <ToggleButton fx:id="length20toggle" layoutX="54.0" layoutY="157.0"
+                                              mnemonicParsing="false" onMouseClicked="#length20Toggle" selected="true"
+                                              stylesheets="@css/toggle.css" text="20" textFill="WHITE"/>
+                                <ToggleButton fx:id="length40toggle" layoutX="90.0" layoutY="157.0"
+                                              mnemonicParsing="false" onMouseClicked="#length40Toggle"
+                                              stylesheets="@css/toggle.css" text="40" textFill="WHITE"/>
+                                <Text fill="WHITE" layoutX="17.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Width"/>
+                                <ToggleButton disable="true" layoutX="17.0" layoutY="202.0" mnemonicParsing="false"
+                                              selected="true" stylesheets="@css/toggle.css" text="8" textFill="WHITE"/>
+                                <Text fill="WHITE" layoutX="70.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Height"/>
+                                <ToggleButton disable="true" layoutX="70.0" layoutY="202.0" mnemonicParsing="false"
+                                              selected="true" stylesheets="@css/toggle.css" text="8" textFill="WHITE"/>
+                                <Text fill="WHITE" layoutX="231.0" layoutY="100.0" strokeType="OUTSIDE"
+                                      strokeWidth="0.0" text="Capacity"/>
+                                <TextField fx:id="containerCapacityBox" editable="false" layoutX="231.0" layoutY="103.0"
+                                           prefHeight="31.0" prefWidth="76.0"
+                                           style="-fx-background-color: #8ad3ff; -fx-border-color: #8ad3ff; -fx-text-fill: black;"
+                                           text="1280">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <TextField fx:id="containerSizeBox" editable="false" layoutX="307.0" layoutY="103.0"
+                                           prefHeight="31.0" prefWidth="79.0"
+                                           style="-fx-background-color: #9580ff; -fx-border-color: #9580ff; -fx-text-fill: white;"
+                                           text="0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="307.0" layoutY="100.0" strokeType="OUTSIDE"
+                                      strokeWidth="0.0" text="Current size" textAlignment="RIGHT"/>
+                                <AnchorPane layoutX="1.0" layoutY="689.0" prefHeight="171.0" prefWidth="461.0"
+                                            style="-fx-background-color: black;">
+                                    <children>
+                                        <ListView fx:id="log" layoutY="22.0" prefHeight="128.0" prefWidth="461.0"
+                                                  style="-fx-background-color: black;" stylesheets="@css/terminal.css">
+                                            <contextMenu>
+                                                <ContextMenu>
+                                                    <items>
+                                                        <MenuItem mnemonicParsing="false"
+                                                                  onAction="#clearOutputTerminal" text="Clear"/>
+                                                        <SeparatorMenuItem mnemonicParsing="false"/>
+                                                        <MenuItem mnemonicParsing="false" onAction="#logTerminal"
+                                                                  text="Open command prompt"/>
+                                                    </items>
+                                                </ContextMenu>
+                                            </contextMenu>
+                                        </ListView>
+                                        <Text fill="WHITE" layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE"
+                                              strokeWidth="0.0" text="Always on output Terminal">
+                                            <font>
+                                                <Font name="Ubuntu Mono" size="19.0"/>
+                                            </font>
+                                        </Text>
+                                        <Button layoutX="298.0" mnemonicParsing="false" onMouseClicked="#logTerminal"
+                                                prefHeight="0.0" prefWidth="163.0"
+                                                style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;"
+                                                text="Open command prompt">
+                                            <font>
+                                                <Font size="12.0"/>
+                                            </font>
+                                        </Button>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="860.0" prefWidth="251.0" style="-fx-background-color: #111726;">
+                            <children>
+                                <ListView fx:id="palletListView" layoutX="-9.0" layoutY="385.0" prefHeight="328.0"
+                                          prefWidth="229.0" style="-fx-background-color: #6589eb;"
+                                          stylesheets="@css/stylesheet.css" AnchorPane.bottomAnchor="17.0"
+                                          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                                    <contextMenu>
+                                        <ContextMenu>
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" onAction="#removePallet"
+                                                          text="Delete Pallet"/>
+                                            </items>
+                                        </ContextMenu>
+                                    </contextMenu>
+                                </ListView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="25.0" layoutY="510.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Pallets" textAlignment="RIGHT"
+                                      wrappingWidth="210.0">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="20.0"/>
+                                    </font>
+                                </Text>
+                                <ImageView fitHeight="137.0" fitWidth="99.0" layoutX="8.0" layoutY="416.0"
+                                           pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/container.png"/>
+                                    </image>
+                                </ImageView>
+                                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="46.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="Pallet">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="34.0"/>
+                                    </font>
+                                </Text>
+                                <Text fx:id="palletIDInfo" fill="WHITE" fontSmoothingType="LCD" layoutX="14.0"
+                                      layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="18.0"/>
+                                    </font>
+                                </Text>
+                                <Button layoutX="116.0" layoutY="371.0" mnemonicParsing="false"
+                                        onMouseClicked="#updatePallet" prefHeight="12.0" prefWidth="116.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Update">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="150.0" layoutY="466.0" mnemonicParsing="false"
+                                        onMouseClicked="#deselectPallet" prefHeight="20.0" prefWidth="82.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Deselect">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="13.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="14.0" layoutY="371.0" mnemonicParsing="false"
+                                        onMouseClicked="#addPallet" prefHeight="40.0" prefWidth="74.0"
+                                        style="-fx-background-color: #8ad3ff;" text="Add">
+                                    <font>
+                                        <Font size="21.0"/>
+                                    </font>
+                                </Button>
+                                <TextArea fx:id="palletDescBox" layoutX="19.0" layoutY="262.0" prefHeight="80.0"
+                                          prefWidth="195.0" promptText="Description of Goods"
+                                          style="-fx-text-fill: white; -fx-background-color: black; -fx-border-color: white;"
+                                          stylesheets="@css/textarea.css"/>
+                                <Text fill="WHITE" layoutX="20.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Description"/>
+                                <TextField fx:id="palletValueBox" layoutX="19.0" layoutY="208.0" prefHeight="31.0"
+                                           prefWidth="87.0" promptText="Value"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="19.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Unit Value*"/>
+                                <TextField fx:id="palletSizeBox" layoutX="19.0" layoutY="155.0" prefHeight="31.0"
+                                           prefWidth="87.0" promptText="Size"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="19.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Size*"/>
+                                <TextField fx:id="palletIDBox" layoutX="19.0" layoutY="101.0" prefHeight="0.0"
+                                           prefWidth="195.0" promptText="Pallet Mark"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: orange;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="19.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="International Mark*"/>
+                                <TextField fx:id="palletAmountBox" layoutX="121.0" layoutY="207.0" prefHeight="31.0"
+                                           prefWidth="87.0" promptText="Amount"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="121.0" layoutY="204.0" strokeType="OUTSIDE"
+                                      strokeWidth="0.0" text="Quantity*"/>
+                                <TextField fx:id="palletWeightBox" layoutX="121.0" layoutY="156.0" prefHeight="31.0"
+                                           prefWidth="87.0" promptText="Weight"
+                                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                                    <font>
+                                        <Font name="Monospaced Regular" size="15.0"/>
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="121.0" layoutY="153.0" strokeType="OUTSIDE"
+                                      strokeWidth="0.0" text="Weight*"/>
+                                <Button layoutX="116.0" layoutY="423.0" mnemonicParsing="false"
+                                        onMouseClicked="#smartAdd" prefHeight="30.0" prefWidth="116.0"
+                                        style="-fx-background-color: #ffea4a;" text="Smart Add">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                </Button>
+                                <Text fx:id="smartAddReturn" fill="#ffea4a" layoutX="18.0" layoutY="361.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0"/>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </children>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+        </AnchorPane>
+    </children>
+</VBox>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox prefHeight="252.0" prefWidth="581.0" style="-fx-background-color: #11182b;"
+      xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.pyel.BaseController">
+    <children>
+        <AnchorPane prefHeight="231.0" prefWidth="492.0" stylesheets="@Game_Machines/smp.css">
+            <children>
+                <Button fx:id="popUpAddAddButton" layoutX="558.0" layoutY="120.0" mnemonicParsing="false"
+                        onMouseClicked="#addPort" style="-fx-background-color: #8ad3ff;" text="Add">
+                    <font>
+                        <Font size="30.0"/>
+                    </font>
+                </Button>
+                <ImageView fitHeight="200.0" fitWidth="230.0" layoutX="692.0" layoutY="16.0" pickOnBounds="true"
+                           preserveRatio="true" AnchorPane.leftAnchor="692.0" AnchorPane.rightAnchor="14.0"
+                           AnchorPane.topAnchor="16.0">
+                    <image>
+                        <Image url="@img/transparent_ondark.png"/>
+                    </image>
+                </ImageView>
+                <TextField fx:id="popUpAddPortName" layoutX="31.0" layoutY="96.0" prefHeight="39.0" prefWidth="494.0"
+                           promptText="Port name"
+                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                    <font>
+                        <Font name="Chilanka Regular" size="20.0"/>
+                    </font>
+                </TextField>
+                <TextField fx:id="popUpAddPortID" layoutX="31.0" layoutY="157.0" prefHeight="45.0" prefWidth="195.0"
+                           promptText="Port ID"
+                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: orange;">
+                    <font>
+                        <Font name="Chilanka Regular" size="20.0"/>
+                    </font>
+                </TextField>
+                <TextField fx:id="popUpAddPortCountry" layoutX="248.0" layoutY="157.0" prefHeight="39.0"
+                           prefWidth="277.0" promptText="Country"
+                           style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;">
+                    <font>
+                        <Font name="Chilanka Regular" size="20.0"/>
+                    </font>
+                </TextField>
+                <Text fill="WHITE" fontSmoothingType="LCD" layoutX="31.0" layoutY="64.0" strokeType="OUTSIDE"
+                      strokeWidth="0.0" text="Adding a new port to the system">
+                    <font>
+                        <Font name="Chilanka Regular" size="26.0"/>
+                    </font>
+                </Text>
+                <CheckBox fx:id="popUpAddKeepMeOpen" layoutX="558.0" layoutY="181.0" mnemonicParsing="false"
+                          text="Keep me open" textFill="#82cbff">
+                    <font>
+                        <Font name="Chilanka Regular" size="14.0"/>
+                    </font>
+                </CheckBox>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

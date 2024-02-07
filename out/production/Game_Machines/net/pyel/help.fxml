@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11182b;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.pyel.BaseController">
+   <children>
+      <TabPane prefHeight="715.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="About">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="829.0" prefWidth="1200.0">
+                     <children>
+                        <ImageView fitHeight="682.0" fitWidth="682.0" layoutX="518.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <image>
+                              <Image url="@img/help2.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="#f2f2f2" layoutX="78.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Stuctures And Algorithms Assignment 1" textAlignment="CENTER" wrappingWidth="362.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#7ae7ff" layoutX="78.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zalán Tóth - 20102768" textAlignment="CENTER" wrappingWidth="362.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="251.0" fitWidth="569.0" layoutX="35.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/SETU_white.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="78.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Computer Forensics and Security Year 2" textAlignment="CENTER" wrappingWidth="362.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#c6c6c6" layoutX="78.0" layoutY="478.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SETU Waterford" textAlignment="CENTER" wrappingWidth="362.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#c6c6c6" layoutX="78.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="School of Science and Computing" textAlignment="CENTER" wrappingWidth="362.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#c6c6c6" layoutX="24.0" layoutY="526.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department of Computing and Mathematics" textAlignment="CENTER" wrappingWidth="470.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#9ad0c9" layoutX="24.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waterford City, Ireland" textAlignment="CENTER" wrappingWidth="470.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#9ad0c9" layoutX="24.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="06/12/2023" textAlignment="CENTER" wrappingWidth="470.0">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="HelpDesk">
+            <content>
+              <AnchorPane minHeight="-Infinity" minWidth="0.0" prefHeight="669.0" prefWidth="1200.0">
+                     <children>
+                        <ImageView fitHeight="682.0" fitWidth="682.0" layoutX="517.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <image>
+                              <Image url="@img/help1.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="148.0" fitWidth="198.0" layoutX="345.0" layoutY="471.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/transparent_ondark.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="#a4a4a4" layoutX="400.0" layoutY="634.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alpha Edition" wrappingWidth="124.39990234375">
+                           <font>
+                              <Font name="Monospaced Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#a4a4a4" layoutX="345.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.0.1-alpha">
+                           <font>
+                              <Font name="Monospaced Regular" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fill="#f2f2f2" layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Help Centre!">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Pane layoutX="14.0" layoutY="67.0" prefHeight="56.0" prefWidth="479.0">
+                           <children>
+                              <Text fx:id="openHelpCentre" fill="#c6c6c6" strokeType="OUTSIDE" strokeWidth="0.0" text="To navigate in the Help Desk use the tabs on the top. Also please keep in mind, that you might be able to scroll down for more information in some tabs." wrappingWidth="500.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Reference">
+               <content>
+                  <AnchorPane minHeight="-Infinity" minWidth="0.0" prefHeight="669.0" prefWidth="1200.0">
+                     <children>
+                        <ImageView fitHeight="682.0" fitWidth="682.0" layoutX="517.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <image>
+                              <Image url="@img/help3.png" />
+                           </image>
+                        </ImageView>
+                        <Text fill="#f2f2f2" layoutX="14.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reference">
+                           <font>
+                              <Font name="Monospaced Regular" size="19.0" />
+                           </font>
+                        </Text>
+                        <Pane layoutX="14.0" layoutY="67.0" prefHeight="56.0" prefWidth="479.0">
+                           <children>
+                              <Text fx:id="openHelpCentre1" fill="#c6c6c6" strokeType="OUTSIDE" strokeWidth="0.0" text="Images and logos for the assignment has been generated with AI tools. Stackoverflow was used to understand some general terms and methods in data structure- and algorithm coding." wrappingWidth="500.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>

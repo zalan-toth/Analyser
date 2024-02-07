@@ -1,0 +1,25 @@
+.list-view {
+    -fx-background-color: rgba(0,0,0,0.3); /* Transparent background for the ListView */
+    -fx-background-insets: 0;
+}
+
+.list-cell {
+    -fx-background-color: transparent; /* Transparent background for cells */
+    -fx-border-color: transparent; /* No borders for cells */
+    -fx-text-fill: #ffffff; /* White text color */
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:hover {
+    -fx-background-color: #1c1c1c; /* Slightly darker background for selected cell */
+    -fx-background-insets: 0;
+    -fx-text-fill: #ffffff; /* White text color for selection */
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #333333; /* Slightly lighter background for hover on cell */
+    -fx-background-insets: 0;
+}
+
+.list-cell:empty {
+    -fx-background-color: transparent; /* Ensure empty cells have a transparent background */
+}

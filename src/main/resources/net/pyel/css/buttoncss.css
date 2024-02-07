@@ -1,0 +1,22 @@
+.button {
+    -fx-border-width: 0;
+    -fx-background-radius:0;
+    -fx-text-fill: white;
+    -fx-radius: 0;
+    -fx-font-family: "monospace";
+    -fx-font-size: 12px;
+    -fx-border-radius: 0;
+    -fx-outline: none;
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    -fx-padding: 4 20 4 20; /* Minimal padding */
+}
+
+.button:hover {
+    -fx-text-fill:white;
+    -fx-background-color: rgba(0, 0, 0, 0.3); /* Slightly darker on hover */
+}
+
+.button:pressed {
+    -fx-background-color: rgba(0, 0, 0, 0.4); /* Even darker when pressed */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.6) , 4, 0.0 , 0 , -1 ); /* Smaller shadow when pressed */
+}

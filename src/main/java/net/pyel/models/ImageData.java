@@ -2,9 +2,11 @@ package net.pyel.models;
 
 import javafx.scene.image.*;
 
+import java.util.Random;
+
 public class ImageData {
 	Image originalImage;
-	//Image originalImage;
+	Image imageToEdit;
 	Image grayScaleImage;
 	Image onlyRedChannelImage;
 	Image onlyGreenChannelImage;
@@ -13,9 +15,11 @@ public class ImageData {
 	int[] greenFrequency = new int[256];
 	int[] blueFrequency = new int[256];
 
+	int bogoAmount = 0;
 
 	public ImageData(Image originalImage) {
 		this.originalImage = originalImage;
+		this.imageToEdit = originalImage;
 		ImageData id = processImages(originalImage);
 		this.grayScaleImage = id.getGrayScaleImage();
 		this.onlyRedChannelImage = id.getOnlyRedChannelImage();
@@ -25,6 +29,7 @@ public class ImageData {
 
 	public ImageData(Image originalImage, Image grayScaleImage, Image onlyRedChannelImage, Image onlyGreenChannelImage, Image onlyBlueChannelImage, int[] redFrequency, int[] greenFrequency, int[] blueFrequency) {
 		this.originalImage = originalImage;
+		this.imageToEdit = originalImage;
 		this.grayScaleImage = grayScaleImage;
 		this.onlyRedChannelImage = onlyRedChannelImage;
 		this.onlyGreenChannelImage = onlyGreenChannelImage;
@@ -77,6 +82,56 @@ public class ImageData {
 		//	return new ImageView(wr).getImage();
 
 		return new ImageData(image, new ImageView(gray).getImage(), new ImageView(red).getImage(), new ImageView(green).getImage(), new ImageView(blue).getImage(), redFrequency, greenFrequency, blueFrequency);
+	}
+
+	public void doBogo() {
+		int width = (int) imageToEdit.getWidth();
+		int height = (int) imageToEdit.getHeight();
+
+		WritableImage newImage = new WritableImage(width, height);
+
+		PixelReader pr = imageToEdit.getPixelReader();
+		PixelWriter pw = newImage.getPixelWriter();
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int v = pr.getArgb(x, y);
+				pw.setArgb(x, y, v);
+			}
+		}
+		if (bogoAmount == 4) {
+			bogoAmount = 16;
+		}
+		long l = ((long) 100 * height) * ((long) bogoAmount * width / 500);
+		for (long i = 0; i < l; i++) {
+
+			getMeSwapping(width, height, pw, pr);
+		}
+
+		setImageToEdit(newImage);
+	}
+
+	private void getMeSwapping(int width, int height, PixelWriter pw, PixelReader pr) {
+		Random random = new Random();
+		int swap1x = random.nextInt(width);
+		int swap1y = random.nextInt(height);
+		int swap2x = random.nextInt(width);
+		int swap2y = random.nextInt(height);
+
+
+		int v1 = pr.getArgb(swap1x, swap1y);
+		int v2 = pr.getArgb(swap2x, swap2y);
+		int saveMe = v1;
+		pw.setArgb(swap1x, swap1y, v2);
+		pw.setArgb(swap2x, swap2y, saveMe);
+	}
+
+	public Image getImageToEdit() {
+		return imageToEdit;
+	}
+
+	public void setImageToEdit(Image imageToEdit) {
+		this.imageToEdit = imageToEdit;
 	}
 
 	public int[] getRedFrequency() {
@@ -143,4 +198,11 @@ public class ImageData {
 		this.onlyBlueChannelImage = onlyBlueChannelImage;
 	}
 
+	public int getBogoAmount() {
+		return bogoAmount;
+	}
+
+	public void setBogoAmount(int bogoAmount) {
+		this.bogoAmount = bogoAmount;
+	}
 }

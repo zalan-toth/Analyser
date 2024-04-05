@@ -73,6 +73,7 @@ public class BaseController implements Initializable {
 	public NumberAxis redChartNumberAxis = new NumberAxis();
 	public BarChart<String, Number> redChart = new BarChart<>(redChartCategoryAxis, redChartNumberAxis);
 	public ImageView imageView = new ImageView();
+	public ImageView originalImageView = new ImageView();
 	public ImageView grayImageView = new ImageView();
 	public ImageView redImageView = new ImageView();
 	public ImageView greenImageView = new ImageView();
@@ -93,6 +94,12 @@ public class BaseController implements Initializable {
 	public Slider bogoSlider = new Slider();
 	@FXML
 	public Text bogoText = new Text();
+	@FXML
+	public Text saturationText = new Text();
+	@FXML
+	public Text hueText = new Text();
+	@FXML
+	public Text brightnessText = new Text();
 
 	Translate bogoTranslate = new Translate();
 	//██╗░░░░░░█████╗░░██████╗░██╗███╗░░██╗
@@ -196,7 +203,8 @@ public class BaseController implements Initializable {
 			} catch (IOException e) {
 			}
 			id = new ImageData(image);
-			imageView.setImage(id.getOriginalImage());
+			originalImageView.setImage(id.getOriginalImage());
+			imageView.setImage(id.getImageToEdit());
 			grayImage = id.getGrayScaleImage();
 			grayImageView.setImage(grayImage);
 			redImageView.setImage(id.getOnlyRedChannelImage());
@@ -309,7 +317,7 @@ public class BaseController implements Initializable {
 	private void openHelpMenu() throws IOException {
 		popuproot = FXMLLoader.load(getClass().getResource("help.fxml"));
 		popupstage.setResizable(false);
-		popupstage.setTitle("Game Panel | About & Help Centre");
+		popupstage.setTitle("Image Analyser | About & Help Centre");
 		popupScene = new Scene(popuproot);
 		popupstage.setScene(popupScene);
 		popupstage.show();
@@ -325,6 +333,13 @@ public class BaseController implements Initializable {
 	@FXML
 	private void refresh() {
 		initialize(null, null);
+	}
+
+	public void letsdobogo() {
+
+		id.doBogo();
+
+		imageView.setImage(id.getImageToEdit());
 	}
 
 	@Override
@@ -352,7 +367,51 @@ public class BaseController implements Initializable {
 					ObservableValue<? extends Number> observableValue,
 					Number oldValue,
 					Number newValue) {
-				bogoText.setText(String.valueOf(newValue.intValue()));
+				bogoText.setText(String.valueOf(newValue.intValue() / 25));
+				id.setBogoAmount(newValue.intValue() / 25);
+				refresh();
+				//betLabel.textProperty().setValue(
+				//String.valueOf(newValue.intValue());
+
+			}
+		});
+
+		saturationSlider.valueProperty().addListener(new ChangeListener<>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldValue,
+					Number newValue) {
+				saturationText.setText(String.valueOf(newValue.intValue()));
+				//betLabel.textProperty().setValue(
+				//String.valueOf(newValue.intValue());
+
+			}
+		});
+
+		hueSlider.valueProperty().addListener(new ChangeListener<>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldValue,
+					Number newValue) {
+				hueText.setText(String.valueOf(newValue.intValue()));
+				//betLabel.textProperty().setValue(
+				//String.valueOf(newValue.intValue());
+
+			}
+		});
+
+		brightnessSlider.valueProperty().addListener(new ChangeListener<>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldValue,
+					Number newValue) {
+				brightnessText.setText(String.valueOf(newValue.intValue()));
 				//betLabel.textProperty().setValue(
 				//String.valueOf(newValue.intValue());
 

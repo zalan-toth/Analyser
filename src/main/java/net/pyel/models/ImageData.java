@@ -15,12 +15,18 @@ public class ImageData {
 	int[] greenFrequency = new int[256];
 	int[] blueFrequency = new int[256];
 
+	int sizeOfSet;
+	int width;
+	int height;
+	int[] setToStoreARGB;
+	int[] setToStoreRelation;
 	int bogoAmount = 0;
 
 	public ImageData(Image originalImage) {
 		this.originalImage = originalImage;
 		this.imageToEdit = originalImage;
 		ImageData id = processImages(originalImage);
+		processMe(originalImage);
 		this.grayScaleImage = id.getGrayScaleImage();
 		this.onlyRedChannelImage = id.getOnlyRedChannelImage();
 		this.onlyGreenChannelImage = id.getOnlyGreenChannelImage();
@@ -37,6 +43,26 @@ public class ImageData {
 		this.redFrequency = redFrequency;
 		this.greenFrequency = greenFrequency;
 		this.blueFrequency = blueFrequency;
+	}
+
+	private void processMe(Image image) {
+		width = (int) image.getWidth();
+		height = (int) image.getHeight();
+		sizeOfSet = width * height;
+		setToStoreARGB = new int[sizeOfSet];
+		setToStoreRelation = new int[sizeOfSet];
+
+		PixelReader pr = image.getPixelReader();
+		for (int v = 0; v < setToStoreARGB.length; v++) {
+			int xCoordinate = v % width; // Correct calculation of xCoordinate
+			int yCoordinate = v / width; // Correct calculation of yCoordinate
+			int valueToSet = pr.getArgb(xCoordinate, yCoordinate);
+			setToStoreARGB[v] = valueToSet;
+			setToStoreRelation[v] = -1;
+			//System.out.print(setToStoreRelation[v]);
+
+		}
+
 	}
 
 	private ImageData processImages(Image image) {

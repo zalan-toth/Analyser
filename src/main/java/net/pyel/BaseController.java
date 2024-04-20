@@ -3,7 +3,6 @@ package net.pyel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +10,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -21,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import net.pyel.models.ImageData;
+import net.pyel.models.ImageProcess;
+import net.pyel.models.Labeler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,7 +37,7 @@ import java.util.ResourceBundle;
 /**
  * Base Controller - Manages all windows with fxml
  *
- * @author Zalán Tóth & Marcin Budzinski
+ * @author Zalán Tóth
  */
 public class BaseController implements Initializable {
 
@@ -49,6 +51,7 @@ public class BaseController implements Initializable {
 	//private static PanelAPI panelAPI = new PanelAPI(null);
 	//private CustomList<Machine> machines;
 	//private CustomList<Game> games = new CustomList<>();
+	Labeler labeler = new Labeler();
 	Stage popupstage = new Stage();
 	Parent popuproot;
 	Scene popupScene;
@@ -57,6 +60,10 @@ public class BaseController implements Initializable {
 	Scene terminalScene;
 	boolean setRun = true;
 	ImageData id;
+	ImageProcess ip;
+	int color1 = 0;
+	int color2 = 0;
+	int backgroundColor = 0xFFFFFFFF;
 
 	//███████╗██╗░░██╗███╗░░░███╗██╗░░░░░░░░░░░░░██████╗░███████╗░█████╗░██╗░░░░░░█████╗░██████╗░███████╗
 	//██╔════╝╚██╗██╔╝████╗░████║██║░░░░░░░░░░░░░██╔══██╗██╔════╝██╔══██╗██║░░░░░██╔══██╗██╔══██╗██╔════╝
@@ -73,6 +80,14 @@ public class BaseController implements Initializable {
 	public NumberAxis redChartNumberAxis = new NumberAxis();
 	public BarChart<String, Number> redChart = new BarChart<>(redChartCategoryAxis, redChartNumberAxis);
 	public ImageView imageView = new ImageView();
+	@FXML
+	public Text color1text = new Text();
+	@FXML
+	public Text color2text = new Text();
+	@FXML
+	public CheckBox dualToneCheckBox = new CheckBox();
+	@FXML
+	public ImageView bwImageView = new ImageView();
 	public ImageView originalImageView = new ImageView();
 	public ImageView grayImageView = new ImageView();
 	public ImageView redImageView = new ImageView();
@@ -102,18 +117,6 @@ public class BaseController implements Initializable {
 	public Text brightnessText = new Text();
 
 	Translate bogoTranslate = new Translate();
-	//██╗░░░░░░█████╗░░██████╗░██╗███╗░░██╗
-	//██║░░░░░██╔══██╗██╔════╝░██║████╗░██║
-	//██║░░░░░██║░░██║██║░░██╗░██║██╔██╗██║
-	//██║░░░░░██║░░██║██║░░╚██╗██║██║╚████║
-	//███████╗╚█████╔╝╚██████╔╝██║██║░╚███║
-	//╚══════╝░╚════╝░░╚═════╝░╚═╝╚═╝░░╚══╝
-	//░█████╗░░█████╗░███╗░░██╗████████╗██████╗░░█████╗░██╗░░░░░██╗░░░░░███████╗██████╗░
-	//██╔══██╗██╔══██╗████╗░██║╚══██╔══╝██╔══██╗██╔══██╗██║░░░░░██║░░░░░██╔════╝██╔══██╗
-	//██║░░╚═╝██║░░██║██╔██╗██║░░░██║░░░██████╔╝██║░░██║██║░░░░░██║░░░░░█████╗░░██████╔╝
-	//██║░░██╗██║░░██║██║╚████║░░░██║░░░██╔══██╗██║░░██║██║░░░░░██║░░░░░██╔══╝░░██╔══██╗
-	//╚█████╔╝╚█████╔╝██║░╚███║░░░██║░░░██║░░██║╚█████╔╝███████╗███████╗███████╗██║░░██║
-	//░╚════╝░░╚════╝░╚═╝░░╚══╝░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░╚══════╝╚══════╝╚══════╝╚═╝░░╚═╝
 
 	public BaseController() {
 		//panelAPI = BackgroundController.getPanelAPI();
@@ -121,65 +124,6 @@ public class BaseController implements Initializable {
 		//games = panelAPI.panel.getGames();
 	}
 
-	//██████╗░███████╗██████╗░░██████╗██╗░██████╗████████╗███████╗███╗░░██╗░█████╗░███████╗
-	//██╔══██╗██╔════╝██╔══██╗██╔════╝██║██╔════╝╚══██╔══╝██╔════╝████╗░██║██╔══██╗██╔════╝
-	//██████╔╝█████╗░░██████╔╝╚█████╗░██║╚█████╗░░░░██║░░░█████╗░░██╔██╗██║██║░░╚═╝█████╗░░
-	//██╔═══╝░██╔══╝░░██╔══██╗░╚═══██╗██║░╚═══██╗░░░██║░░░██╔══╝░░██║╚████║██║░░██╗██╔══╝░░
-	//██║░░░░░███████╗██║░░██║██████╔╝██║██████╔╝░░░██║░░░███████╗██║░╚███║╚█████╔╝███████╗
-
-	/**
-	 * Loads data from panel.xml
-	 */
-	@FXML
-	private void loadData() {
-		BackgroundController.loadData();
-		//BackgroundController.setPanelAPI(panelAPI);
-		//deselectMachine();
-		//deselectGame();
-		//machines = panelAPI.panel.getMachines();
-		//games = panelAPI.panel.getGames();
-		initialize(null, null);
-	}
-
-
-	/**
-	 * Saves data to panel.xml
-	 */
-	@FXML
-	private void saveData() {
-		BackgroundController.saveData();
-	}
-
-	/**
-	 * Will load the panel with new data
-	 */
-	@FXML
-	private void newPanel() throws IOException {
-		//BackgroundController.setPanelAPI(new PanelAPI(staff.getText()));
-		App.setRoot("main");
-		App.getStageInfo().setTitle("Game Panel | Ports");
-		App.getStageInfo().setHeight(900);//920
-		App.getStageInfo().setWidth(1400);//1434
-		App.getStageInfo().setResizable(false);
-
-
-	}
-
-	/**
-	 * Setup of basepanel
-	 */
-	@FXML
-	private void basePanel() throws IOException {
-		//BackgroundController.setPanelAPI(new PanelAPI(staff.getText()));
-		App.getStageInfo().setFullScreen(false);
-		App.getStageInfo().setHeight(647);
-		App.getStageInfo().setWidth(1024);
-		App.getStageInfo().setResizable(false);
-		App.getStageInfo().setTitle("Game Panel | Welcome");
-		App.setRoot("base");
-
-
-	}
 
 	/**
 	 * Call this method if you wanna close the application
@@ -203,6 +147,10 @@ public class BaseController implements Initializable {
 			} catch (IOException e) {
 			}
 			id = new ImageData(image);
+			ip = new ImageProcess(image);
+			ip.processMe();
+
+
 			originalImageView.setImage(id.getOriginalImage());
 			imageView.setImage(id.getImageToEdit());
 			grayImage = id.getGrayScaleImage();
@@ -215,6 +163,53 @@ public class BaseController implements Initializable {
 			setBar();
 		}
 	}
+
+	/*public void markPills(int root) {
+		int width = 512;
+		int count = 0;
+
+		// First, count the number of pixels in the set
+		for (int i = 0; i < sets.length; i++) {
+			if (find(sets, i) == root) {
+				count++;
+			}
+		}
+
+		// Only proceed if the set contains more than 5 pixels
+		if (count > 5) {
+			int minX = Integer.MAX_VALUE;
+			int maxX = Integer.MIN_VALUE;
+			int minY = Integer.MAX_VALUE;
+			int maxY = Integer.MIN_VALUE;
+
+			for (int i = 0; i < sets.length; i++) {
+				if (find(sets, i) == root) {
+					int row = i / width;
+					int col = i % width;
+
+					if (row < minY) minY = row;
+					if (row > maxY) maxY = row;
+					if (col < minX) minX = col;
+					if (col > maxX) maxX = col;
+				}
+			}
+
+			Rectangle r = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			// Create and position the label
+			Label l = new Label(String.valueOf(this.count));
+			l.setLayoutX(minX - 14); // Position the label at the top-left corner of the rectangle
+			l.setLayoutY(minY - 14);
+			Pane parentPane = (Pane) imagePane.getParent();
+
+			// Increment the count for the next label
+			this.count++;
+			r.setFill(Color.TRANSPARENT); // Set the fill to transparent
+			r.setStroke(Color.GREEN); // Set the stroke color to green
+			r.setStrokeWidth(2);
+
+			parentPane.getChildren().addAll(r, l); // Add both the rectangle and the label to the pane
+		}
+	}*/
 
 	private void setBar() {
 
@@ -285,44 +280,6 @@ public class BaseController implements Initializable {
 		return new ImageView(wr).getImage();
 	}
 
-	/**
-	 * Will load the panel with the saved data panel.xml
-	 */
-	@FXML
-	private void loadPanel() throws IOException {
-		//	BackgroundController.setPanelAPI(new PanelAPI(staff.getText()));
-		//panelAPI = BackgroundController.getPanelAPI();
-		loadData();
-		//machines = panelAPI.panel.getMachines();
-		//games = panelAPI.panel.getGames();
-		/*if (shipsOnSea == null) {
-			shipsOnSea = new CustomList<>();
-		}*/
-		initialize(null, null);
-		App.setRoot("main");
-		App.getStageInfo().setHeight(900);
-		App.getStageInfo().setWidth(1400);
-		App.getStageInfo().setResizable(false);
-
-
-	}
-
-	//██╗░░██╗███████╗██╗░░░░░██████╗░░░░░░██╗░░░░░░░██╗██╗███╗░░██╗██████╗░░█████╗░░██╗░░░░░░░██╗
-	//██║░░██║██╔════╝██║░░░░░██╔══██╗░░░░░██║░░██╗░░██║██║████╗░██║██╔══██╗██╔══██╗░██║░░██╗░░██║
-	//███████║█████╗░░██║░░░░░██████╔╝░░░░░╚██╗████╗██╔╝██║██╔██╗██║██║░░██║██║░░██║░╚██╗████╗██╔╝
-	//██╔══██║██╔══╝░░██║░░░░░██╔═══╝░░░░░░░████╔═████║░██║██║╚████║██║░░██║██║░░██║░░████╔═████║░
-	//██║░░██║███████╗███████╗██║░░░░░░░░░░░╚██╔╝░╚██╔╝░██║██║░╚███║██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░
-	//╚═╝░░╚═╝╚══════╝╚══════╝╚═╝░░░░░░░░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░
-	@FXML
-	private void openHelpMenu() throws IOException {
-		popuproot = FXMLLoader.load(getClass().getResource("help.fxml"));
-		popupstage.setResizable(false);
-		popupstage.setTitle("Image Analyser | About & Help Centre");
-		popupScene = new Scene(popuproot);
-		popupstage.setScene(popupScene);
-		popupstage.show();
-	}
-
 
 	//░██████╗██╗░░░██╗███╗░░██╗░█████╗░
 	//██╔════╝╚██╗░██╔╝████╗░██║██╔══██╗
@@ -339,7 +296,17 @@ public class BaseController implements Initializable {
 
 		id.doBogo();
 
+		ip.setImage(id.getImageToEdit());
+		ip.processMe();
 		imageView.setImage(id.getImageToEdit());
+	}
+
+	@FXML
+	public void selectAllPills() {
+
+		ip.createRelationSet(0, 0, 1);
+		bwImageView.setImage(ip.createSetForBW());
+
 	}
 
 	@Override
@@ -352,7 +319,68 @@ public class BaseController implements Initializable {
 	}
 
 
+	public int findColor(double x, double y) {
+
+		System.out.println("Clicked coordinates: x = " + x + ", y = " + y);
+
+		double viewWidth = imageView.getFitWidth();
+		double viewHeight = imageView.getFitHeight();
+
+		// Actual dimensions of the image
+		double actualWidth = imageView.getImage().getWidth();
+		double actualHeight = imageView.getImage().getHeight();
+
+		// Compute the scale
+		double scaleX = actualWidth / viewWidth;
+		double scaleY = actualHeight / viewHeight;
+
+		// Adjusting for the actual display size within the ImageView
+		double displayWidth = imageView.getBoundsInLocal().getWidth();
+		double displayHeight = imageView.getBoundsInLocal().getHeight();
+
+		// Calculate the ratio of the original image to the displayed image
+		double ratioX = actualWidth / displayWidth;
+		double ratioY = actualHeight / displayHeight;
+
+		// Calculate the original coordinates of the click
+		double originalX = x * ratioX;
+		double originalY = y * ratioY;
+
+		System.out.println("Original coordinates: x = " + (int) originalX + ", y = " + (int) originalY);
+		return ip.findClickedColor((int) originalX, (int) originalY);
+	}
+
+
 	private void setupPortListViewListener() {
+		imageView.setOnMouseClicked(event -> {
+			double x = event.getX();
+			double y = event.getY();
+			if (dualToneCheckBox.isSelected()) {
+
+				if (color1 == 0) {
+					color1 = findColor(x, y);
+					color1text.setText("Color 1 selected");
+					System.out.println("c1");
+				} else if (color2 == 0) {
+					color2 = findColor(x, y);
+					color2text.setText("Color 2 selected");
+					System.out.println("c2");
+					ip.createRelationSet(color1, color2, 0);
+					bwImageView.setImage(ip.createSetForBW());
+				} else {
+					color1 = 0;
+					color2 = 0;
+					color1text.setText("-");
+					color2text.setText("-");
+				}
+
+			} else {
+
+				int foundColor = findColor(x, y);
+				ip.createRelationSet(foundColor, 0, 0);
+				bwImageView.setImage(ip.createSetForBW());
+			}
+		});
 		viewFacility.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			// This will be called whenever the user selects a different item in the list
 			if (newValue != null) {
@@ -369,6 +397,7 @@ public class BaseController implements Initializable {
 					Number newValue) {
 				bogoText.setText(String.valueOf(newValue.intValue() / 25));
 				id.setBogoAmount(newValue.intValue() / 25);
+
 				refresh();
 				//betLabel.textProperty().setValue(
 				//String.valueOf(newValue.intValue());

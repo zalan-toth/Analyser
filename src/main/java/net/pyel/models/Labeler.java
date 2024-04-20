@@ -1,12 +1,12 @@
 package net.pyel.models;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Labeler {
 
-	private ArrayList<PillType> pillTypes = new ArrayList<>();
+	private HashMap<Integer, PillType> pillTypes = new HashMap<>();
 
-	public Labeler(ArrayList<PillType> pillTypes) {
+	public Labeler(HashMap<Integer, PillType> pillTypes) {
 		this.pillTypes = pillTypes;
 	}
 
@@ -14,20 +14,20 @@ public class Labeler {
 	}
 
 	public void addPillType(PillType pillType) {
-		pillTypes.add(pillType);
+		pillTypes.put(pillType.getColor1(), pillType);
 	}
 
 
 	public void removeAllPillTypes() {
 		pillTypes = null;
-		pillTypes = new ArrayList<>();
+		pillTypes = new HashMap<>();
 	}
 
-	public ArrayList<PillType> getPillTypes() {
+	public HashMap<Integer, PillType> getPillTypes() {
 		return pillTypes;
 	}
 
-	public void setPillTypes(ArrayList<PillType> pillTypes) {
+	public void setPillTypes(HashMap<Integer, PillType> pillTypes) {
 		this.pillTypes = pillTypes;
 	}
 

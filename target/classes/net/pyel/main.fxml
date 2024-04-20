@@ -98,9 +98,9 @@
                 <CheckBox fx:id="dualToneCheckBox" layoutX="574.0" layoutY="641.0" mnemonicParsing="false" text="Dual Tone" />
                 <Text fx:id="color1text" layoutX="570.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
                 <Text fx:id="color2text" layoutX="570.0" layoutY="702.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-            <CheckBox fx:id="mode1box" layoutX="74.0" layoutY="513.0" mnemonicParsing="false" text="B&amp;W select" />
-            <Button layoutX="323.0" layoutY="510.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="Select All Pills" textFill="#4f2208" />
-            <CheckBox fx:id="mode2box" layoutX="189.0" layoutY="513.0" mnemonicParsing="false" text="Colored select" />
+            <CheckBox fx:id="mode1box" layoutX="74.0" layoutY="513.0" mnemonicParsing="false" onAction="#selectMode1" text="B&amp;W select" />
+            <Button layoutX="503.0" layoutY="509.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="Select All Pills" textFill="#4f2208" />
+            <CheckBox fx:id="mode2box" layoutX="189.0" layoutY="513.0" mnemonicParsing="false" onAction="#selectMode2" text="Colored select" />
             <Pane layoutX="14.0" layoutY="14.0" prefHeight="484.0" prefWidth="700.0">
                <children>
                       <ImageView fx:id="imageView" fitHeight="484.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true" />
@@ -120,12 +120,14 @@
             <Button disable="true" layoutX="869.0" layoutY="671.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="UPDATE" textFill="#4f2208" />
             <Button disable="true" layoutX="866.0" layoutY="705.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="REMOVE" textFill="#4f2208" />
             <Button layoutX="769.0" layoutY="705.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="RESET" textFill="#4f2208" />
-            <Button layoutX="448.0" layoutY="510.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="RandomColor" textFill="#4f2208" />
             <Text fill="#045124" layoutX="764.0" layoutY="822.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 pills selected" textAlignment="RIGHT">
                <font>
                   <Font size="23.0" />
                </font>
             </Text>
+            <CheckBox fx:id="multiSelectCheckBox" layoutX="574.0" layoutY="720.0" mnemonicParsing="false" text="Multi Select" />
+            <CheckBox fx:id="mode3box" layoutX="321.0" layoutY="513.0" mnemonicParsing="false" onAction="#selectMode3" text="Random color select" />
+            <ImageView fx:id="grayImageView" fitHeight="101.0" fitWidth="242.0" layoutX="1224.0" layoutY="566.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </AnchorPane>
     </children>

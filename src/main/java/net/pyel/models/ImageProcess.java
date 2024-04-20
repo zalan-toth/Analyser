@@ -11,9 +11,9 @@ public class ImageProcess {
 	int height;
 	int sizeOfSet;
 	int[] setToStoreARGB;
-	int[] setToStoreRelation;
-	int[] setToStoreRelationF;
-	int[] setToStoreRelationA;
+	int[] setToStoreRelation; //for first color
+	int[] setToStoreRelationF;  //for second color
+	int[] setToStoreRelationA; //for the whole pill (ALL pixels for the pill with the same root)
 	int[] setToStoreBW;
 	Image image;
 	int backgroundColor = 0xFFFFFFFF;
@@ -143,6 +143,13 @@ public class ImageProcess {
 			int argbValue = pr.getArgb(xCoordinate, yCoordinate);
 			setToStoreARGB[v] = argbValue;
 			setToStoreRelation[v] = -1;
+
+		}
+
+		for (int v = 0; v < setToStoreRelation.length; v++) { //create base
+
+			setToStoreBW[v] = 0xFF000000;
+
 
 		}
 
@@ -337,6 +344,31 @@ public class ImageProcess {
 				//System.out.println("The root of " + id + " is " + find(setToStoreRelation, id));
 			}
 		}
+	}
+
+	/*public void createBWSet() {
+
+		for (int v = 0; v < setToStoreRelation.length; v++) {
+
+			setToStoreBW[v] = 0xFF000000;
+
+
+		}
+
+		for (int v = 0; v < setToStoreRelation.length; v++) {
+
+			if (setToStoreRelation[v] >= 0) {
+				setToStoreBW[v] = 0xFFFFFFFF;
+			}
+			if (setToStoreRelationF[v] >= 0) {
+				setToStoreBW[v] = 0xFF888888;
+			}
+
+
+		}
+	}*/
+	public SingularPill getSingularPillData() {
+		return new SingularPill(width, height, sizeOfSet, setToStoreARGB, setToStoreRelation, setToStoreRelationF, setToStoreRelationA, setToStoreBW, image);
 	}
 
 	public Image createSetForBW() {

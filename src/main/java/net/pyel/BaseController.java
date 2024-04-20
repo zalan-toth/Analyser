@@ -20,9 +20,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-import net.pyel.models.ImageData;
-import net.pyel.models.ImageProcess;
-import net.pyel.models.Labeler;
+import net.pyel.models.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -61,6 +59,7 @@ public class BaseController implements Initializable {
 	boolean setRun = true;
 	ImageData id;
 	ImageProcess ip;
+	ImageBuilder ib = new ImageBuilder();
 	int color1 = 0;
 	int color2 = 0;
 	int backgroundColor = 0xFFFFFFFF;
@@ -84,6 +83,14 @@ public class BaseController implements Initializable {
 	public Text color1text = new Text();
 	@FXML
 	public Text color2text = new Text();
+	@FXML
+	public CheckBox multiSelectCheckBox = new CheckBox();
+	@FXML
+	public CheckBox mode1box = new CheckBox();
+	@FXML
+	public CheckBox mode2box = new CheckBox();
+	@FXML
+	public CheckBox mode3box = new CheckBox();
 	@FXML
 	public CheckBox dualToneCheckBox = new CheckBox();
 	@FXML
@@ -149,6 +156,8 @@ public class BaseController implements Initializable {
 			id = new ImageData(image);
 			ip = new ImageProcess(image);
 			ip.processMe();
+			ib.setImage(ip.getImage());
+			ib.setUp();
 
 
 			originalImageView.setImage(id.getOriginalImage());
@@ -350,6 +359,32 @@ public class BaseController implements Initializable {
 		return ip.findClickedColor((int) originalX, (int) originalY);
 	}
 
+	@FXML
+	public void selectMode1() {
+		if (mode1box.isSelected()) {
+
+			mode2box.setSelected(false);
+			mode3box.setSelected(false);
+		}
+	}
+
+	@FXML
+	public void selectMode2() {
+		if (mode2box.isSelected()) {
+
+			mode1box.setSelected(false);
+			mode3box.setSelected(false);
+		}
+	}
+
+	@FXML
+	public void selectMode3() {
+		if (mode3box.isSelected()) {
+
+			mode1box.setSelected(false);
+			mode2box.setSelected(false);
+		}
+	}
 
 	private void setupPortListViewListener() {
 		imageView.setOnMouseClicked(event -> {
@@ -360,25 +395,57 @@ public class BaseController implements Initializable {
 				if (color1 == 0) {
 					color1 = findColor(x, y);
 					color1text.setText("Color 1 selected");
+					color2text.setText("-");
 					System.out.println("c1");
 				} else if (color2 == 0) {
 					color2 = findColor(x, y);
 					color2text.setText("Color 2 selected");
 					System.out.println("c2");
 					ip.createRelationSet(color1, color2, 0);
-					bwImageView.setImage(ip.createSetForBW());
-				} else {
+					SingularPill sp = ip.getSingularPillData();
+					sp.setColor1(color1);
+					sp.setColor2(color2);
+					ib.setSp(sp);
+					if (!multiSelectCheckBox.isSelected()) {
+						ib.clearImage();
+					}
+					ib.addPill();
+					if (mode1box.isSelected()) {
+						bwImageView.setImage(ib.buildBWImage());
+					} else if (mode2box.isSelected()) {
+						bwImageView.setImage(ib.buildColoredImage());
+					} else if (mode3box.isSelected()) {
+						bwImageView.setImage(ib.buildRandomColoredImage());
+					}
+					color1 = 0;
+					color2 = 0;
+				} /*else {
 					color1 = 0;
 					color2 = 0;
 					color1text.setText("-");
 					color2text.setText("-");
-				}
+				}*/
 
 			} else {
 
+				color1text.setText("-");
+				color2text.setText("-");
 				int foundColor = findColor(x, y);
 				ip.createRelationSet(foundColor, 0, 0);
-				bwImageView.setImage(ip.createSetForBW());
+				SingularPill sp = ip.getSingularPillData();
+				sp.setColor1(foundColor);
+				ib.setSp(sp);
+				if (!multiSelectCheckBox.isSelected()) {
+					ib.clearImage();
+				}
+				ib.addPill();
+				if (mode1box.isSelected()) {
+					bwImageView.setImage(ib.buildBWImage());
+				} else if (mode2box.isSelected()) {
+					bwImageView.setImage(ib.buildColoredImage());
+				} else if (mode3box.isSelected()) {
+					bwImageView.setImage(ib.buildRandomColoredImage());
+				}
 			}
 		});
 		viewFacility.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

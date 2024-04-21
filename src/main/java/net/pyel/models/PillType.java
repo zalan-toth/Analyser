@@ -1,6 +1,6 @@
 package net.pyel.models;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PillType {
 
@@ -9,7 +9,7 @@ public class PillType {
 	private String name = "";
 	private int color1 = 0;
 	private int color2 = 0;
-	private ArrayList<Pill> pills = new ArrayList<>();
+	private HashMap<Integer, Pill> pills = new HashMap<>();
 
 	@Override
 	public String toString() {
@@ -23,7 +23,7 @@ public class PillType {
 
 	public void addPill(Pill pill) {
 		if ((pill.getPixelUnits() > 4) && (pill.getPixelUnits() < 500000)) {
-			pills.add(pill);
+			pills.put(pill.getRelationRoot(), pill);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class PillType {
 		this.relation = relation;
 	}
 
-	public PillType(String name, int color1, int color2, ArrayList<Pill> pills) {
+	public PillType(String name, int color1, int color2, HashMap<Integer, Pill> pills) {
 		this.name = name;
 		this.color1 = color1;
 		this.color2 = color2;
@@ -74,11 +74,11 @@ public class PillType {
 		this.color2 = color2;
 	}
 
-	public ArrayList<Pill> getPills() {
+	public HashMap<Integer, Pill> getPills() {
 		return pills;
 	}
 
-	public void setPills(ArrayList<Pill> pills) {
+	public void setPills(HashMap<Integer, Pill> pills) {
 		this.pills = pills;
 	}
 }

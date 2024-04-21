@@ -62,6 +62,7 @@ public class BaseController implements Initializable {
 	ImageBuilder ib = new ImageBuilder();
 	int color1 = 0;
 	int color2 = 0;
+	int location;
 	int backgroundColor = 0xFFFFFFFF;
 
 	//███████╗██╗░░██╗███╗░░░███╗██╗░░░░░░░░░░░░░██████╗░███████╗░█████╗░██╗░░░░░░█████╗░██████╗░███████╗
@@ -356,6 +357,8 @@ public class BaseController implements Initializable {
 		double originalY = y * ratioY;
 
 		System.out.println("Original coordinates: x = " + (int) originalX + ", y = " + (int) originalY);
+		location = ((int) originalY * (int) imageView.getImage().getWidth()) + (int) originalX;
+		System.out.println("Original setcoord: = " + (int) location);
 		return ip.findClickedColor((int) originalX, (int) originalY);
 	}
 
@@ -384,6 +387,17 @@ public class BaseController implements Initializable {
 			mode1box.setSelected(false);
 			mode2box.setSelected(false);
 		}
+	}
+
+	@FXML
+	public int findSetFromColor(int color1, int color2) {
+		return -1;
+	}
+
+	@FXML
+	public void addLabel() {
+		labeler.addPillType(location, new PillType("Test", color1, color2, ip.getSetToStoreRelationA()));
+		System.out.println(labeler.getPillTypes().get(location));
 	}
 
 	private void setupPortListViewListener() {
@@ -431,6 +445,8 @@ public class BaseController implements Initializable {
 				color1text.setText("-");
 				color2text.setText("-");
 				int foundColor = findColor(x, y);
+				color1 = foundColor;
+				color2 = 0;
 				ip.createRelationSet(foundColor, 0, 0);
 				SingularPill sp = ip.getSingularPillData();
 				sp.setColor1(foundColor);
@@ -446,6 +462,7 @@ public class BaseController implements Initializable {
 				} else if (mode3box.isSelected()) {
 					bwImageView.setImage(ib.buildRandomColoredImage());
 				}
+				//labeler.addPillType(new PillType("Test", foundColor, 0, ip.getSetToStoreRelationA()));
 			}
 		});
 		viewFacility.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

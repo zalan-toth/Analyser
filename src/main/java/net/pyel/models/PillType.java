@@ -22,9 +22,10 @@ public class PillType {
 	}
 
 	public void addPill(Pill pill) {
-		if ((pill.getPixelUnits() > 4) && (pill.getPixelUnits() < 500000)) {
+		/*if ((pill.getPixelUnits() > 4) && (pill.getPixelUnits() < 500000)) {
 			pills.put(pill.getRelationRoot(), pill);
-		}
+		}*/
+		pills.put(pill.getRelationRoot(), pill);
 	}
 
 

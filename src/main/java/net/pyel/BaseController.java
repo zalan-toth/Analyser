@@ -49,7 +49,7 @@ public class BaseController implements Initializable {
 	//private static PanelAPI panelAPI = new PanelAPI(null);
 	//private CustomList<Machine> machines;
 	//private CustomList<Game> games = new CustomList<>();
-	Labeler labeler = new Labeler();
+	Labeler labeler;
 	Stage popupstage = new Stage();
 	Parent popuproot;
 	Scene popupScene;
@@ -160,6 +160,7 @@ public class BaseController implements Initializable {
 			ib.setImage(ip.getImage());
 			ib.setUp();
 
+			labeler = new Labeler(ip.getSizeOfSet());
 
 			originalImageView.setImage(id.getOriginalImage());
 			imageView.setImage(id.getImageToEdit());
@@ -396,8 +397,17 @@ public class BaseController implements Initializable {
 
 	@FXML
 	public void addLabel() {
-		labeler.addPillType(location, new PillType("Test", color1, color2, ip.getSetToStoreRelationA()));
-		System.out.println(labeler.getPillTypes().get(location));
+		int identification = labeler.getID(location);
+		if (identification == -1) {
+			labeler.addPillType(new PillType("Test", color1, color2, ip.getSetToStoreRelationA()), ip.getSingularPillData());
+			System.out.println(labeler.getPillType(labeler.getID(location)));
+
+			//PROCESS EACH PILL
+
+
+		} else {
+			System.out.println("PillType already exist!!");
+		}
 	}
 
 	private void setupPortListViewListener() {

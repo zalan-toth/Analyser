@@ -2,20 +2,18 @@ package net.pyel.models;
 
 public class Pill {
 
-	private String name = "";
-	private int milligram = 0;
 	private int color1 = 0;
 	private int color2 = 0;
 	private int temporaryNumber = 0;
 	private int number = 0;  //TODO sequental numbering from top
+	private int[] relation;
 	private int relationRoot = -1;
 	private int color1Root = -1;
 	private int color2Root = -1;
 	private int pixelUnits = 0;
 
-	public Pill(String name, int milligram, int color1, int color2, int number, int relationRoot, int color1Root, int color2Root, int pixelUnits) {
-		this.name = name;
-		this.milligram = milligram;
+	public Pill(int color1, int color2, int number, int relationRoot, int color1Root, int color2Root, int pixelUnits, int[] relation) {
+
 		this.color1 = color1;
 		this.color2 = color2;
 		this.number = number;
@@ -23,6 +21,7 @@ public class Pill {
 		this.color1Root = color1Root;
 		this.color2Root = color2Root;
 		this.pixelUnits = pixelUnits;
+		this.relation = relation;
 	}
 
 	public int getTemporaryNumber() {
@@ -31,22 +30,6 @@ public class Pill {
 
 	public void setTemporaryNumber(int temporaryNumber) {
 		this.temporaryNumber = temporaryNumber;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getMilligram() {
-		return milligram;
-	}
-
-	public void setMilligram(int milligram) {
-		this.milligram = milligram;
 	}
 
 	public int getColor1() {

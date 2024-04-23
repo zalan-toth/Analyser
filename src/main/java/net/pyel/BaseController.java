@@ -11,10 +11,8 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -36,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -492,20 +491,73 @@ public class BaseController implements Initializable {
 
 	private void showRectanglesOnPills() {
 		Pane parentPane = (Pane) imageView.getParent();
+
+
+		int[] allRel = new int[(int) image.getWidth() * (int) image.getHeight()];
+		for (int v = 0; v < allRel.length; v++) {
+			allRel[v] = -1;
+
+		}
+		ArrayList<Integer> uniqueRoots = new ArrayList<>();
+		for (PillType pillType : selectedPillTypes) {
+			int[] tempRel = pillType.getRelation();
+			for (int v = 0; v < tempRel.length; v++) {
+				if (tempRel[v] != -1) {
+					allRel[v] = tempRel[v];
+				}
+			}
+		}
+
+		for (int v = 0; v < allRel.length; v++) {
+			if (!uniqueRoots.contains(find(allRel, v))) {
+				uniqueRoots.add(find(allRel, v));
+			}
+
+		}
+		Collections.sort(uniqueRoots);
+
 		int count = 0;  // Counter for labels
+		for (PillType pillType : selectedPillTypes) {
+			for (Pill pill : pillType.getPills().values()) {
+				for (int v = 0; v < uniqueRoots.size(); v++) {
+					if (uniqueRoots.get(v) == pill.getRelationRoot()) {
+						pill.setTemporaryNumber(v);
+					}
+				}
+			}
+		}
+
 
 		for (PillType pillType : selectedPillTypes) {
 			for (Pill pill : pillType.getPills().values()) {
 				Rectangle r = getRectangleForPill(pill);
-				Label l = new Label(String.valueOf(count++));
+				Label l = new Label(String.valueOf(pill.getTemporaryNumber()));
 				l.setLayoutX(r.getX());
 				l.setLayoutY(r.getY());
+				Tooltip tooltip = new Tooltip(pillType.getName() + "\nOrder number:" + pill.getTemporaryNumber() + "\nPixels: " + pill.getPixelUnits());
+				Tooltip.install(r, tooltip);
+
+				r.setOnMouseClicked(event -> {
+					event.consume();
+					removePillTypeSelection(pillType);
+					parentPane.getChildren().removeAll(r, l);
+					updateUIAfterPillTypeRemoval();
+				});
 
 				parentPane.getChildren().addAll(r, l);
 				activeRectangles.add(r);  // Keep track of the rectangle
 				activeRectangles.add(l);  // Keep track of the label
 			}
 		}
+	}
+
+	private void removePillTypeSelection(PillType pillType) {
+		selectedPillTypes.remove(pillType);
+	}
+
+	private void updateUIAfterPillTypeRemoval() {
+		clearRectangles();
+		showRectanglesOnPills();
 	}
 
 	private void setupPortListViewListener() {

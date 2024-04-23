@@ -105,11 +105,22 @@ public class Labeler {
 			}
 		}
 		for (int v = 0; v < uniqueRoots.size(); v++) {
-			pillTypes.get(idNumber).addPill(new Pill(singularPill.getColor1(), singularPill.getColor2(), v + 1, uniqueRoots.get(v), -1, -1, 0, rootMappedToSet.get(uniqueRoots.get(v))));
+			int[] tempArray = rootMappedToSet.get(uniqueRoots.get(v));
+			pillTypes.get(idNumber).addPill(new Pill(singularPill.getColor1(), singularPill.getColor2(), v + 1, uniqueRoots.get(v), -1, -1, calculatePixelAmountForArray(tempArray), tempArray));
 
 			System.out.println("!: " + pillTypes.get(idNumber).getPills().get(uniqueRoots.get(v)).getNumber());
 		}
 		System.out.println("Found pills: " + uniqueRoots.size());
+	}
+
+	public Integer calculatePixelAmountForArray(int[] arr) {
+		int amount = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] != -1) {
+				amount++;
+			}
+		}
+		return amount;
 	}
 
 	public PillType getPillType(int id) {

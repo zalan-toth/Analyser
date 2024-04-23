@@ -24,6 +24,14 @@ public class Pill {
 		this.relation = relation;
 	}
 
+	public int[] getRelation() {
+		return relation;
+	}
+
+	public void setRelation(int[] relation) {
+		this.relation = relation;
+	}
+
 	public int getTemporaryNumber() {
 		return temporaryNumber;
 	}
@@ -86,5 +94,19 @@ public class Pill {
 
 	public void setPixelUnits(int pixelUnits) {
 		this.pixelUnits = pixelUnits;
+	}
+
+	@Override
+	public String toString() {
+		return "Pill{" +
+				"color1=" + color1 +
+				", color2=" + color2 +
+				", temporaryNumber=" + temporaryNumber +
+				", number=" + number +
+				", relationRoot=" + relationRoot +
+				", color1Root=" + color1Root +
+				", color2Root=" + color2Root +
+				", pixelUnits=" + pixelUnits +
+				'}';
 	}
 }

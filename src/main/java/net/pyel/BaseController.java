@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -11,12 +12,16 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
@@ -30,6 +35,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -50,6 +57,8 @@ public class BaseController implements Initializable {
 	//private CustomList<Machine> machines;
 	//private CustomList<Game> games = new CustomList<>();
 	Labeler labeler;
+	private List<Node> activeRectangles = new ArrayList<>();
+	ArrayList<PillType> selectedPillTypes;
 	Stage popupstage = new Stage();
 	Parent popuproot;
 	Scene popupScene;
@@ -75,6 +84,9 @@ public class BaseController implements Initializable {
 	@FXML
 	private ListView<String> viewFacility = new ListView<>();
 
+
+	@FXML
+	public Text pillSelected = new Text();
 
 	public CategoryAxis redChartCategoryAxis = new CategoryAxis();
 	public NumberAxis redChartNumberAxis = new NumberAxis();
@@ -171,6 +183,7 @@ public class BaseController implements Initializable {
 			blueImageView.setImage(id.getOnlyBlueChannelImage());
 			//redChart = createBarChart(id.getRedFrequency(), "Red");
 
+			selectedPillTypes = new ArrayList<>();
 			setBar();
 		}
 	}
@@ -406,7 +419,92 @@ public class BaseController implements Initializable {
 
 
 		} else {
-			System.out.println("PillType already exist!!");
+			System.out.println("PillType already exist!");
+			System.out.println(labeler.getPillType(labeler.getID(location)));
+		}
+	}
+
+	public static int find(int[] a, int id) {
+		// Check if the id is -1 or out of bounds, and return -1 immediately.
+		if (id == -1 || id >= a.length) {
+			return -1;
+		}
+
+		while (a[id] != id) {
+			// Additional check to prevent ArrayIndexOutOfBoundsException
+			// if a[id] is -1 or out of valid range (this depends on your logic)
+			if (a[id] == -1 || a[id] >= a.length) {
+				return -1;
+			}
+			id = a[id];
+		}
+		return id;
+	}
+
+	private Rectangle getRectangleForPill(Pill pill) {
+		int width = (int) imageView.getImage().getWidth();
+		int height = (int) imageView.getImage().getHeight();
+
+		double fitWidth = image.getWidth() / 1.83;
+		double fitHeight = image.getHeight() / 1.83;
+
+		// Determine scale factors
+		double scaleX = fitWidth / width;
+		double scaleY = fitHeight / height;
+
+		int minX = Integer.MAX_VALUE;
+		int maxX = Integer.MIN_VALUE;
+		int minY = Integer.MAX_VALUE;
+		int maxY = Integer.MIN_VALUE;
+
+		for (int i = 0; i < pill.getRelation().length; i++) {
+			if (pill.getRelation()[i] != -1) {
+				int row = i / width;
+				int col = i % width;
+
+				if (row < minY) minY = row;
+				if (row > maxY) maxY = row;
+				if (col < minX) minX = col;
+				if (col > maxX) maxX = col;
+			}
+		}
+
+		// Adjusting for ImageView scaling
+		double rectX = minX * scaleX;
+		double rectY = minY * scaleY;
+		double rectWidth = (maxX - minX + 1) * scaleX;
+		double rectHeight = (maxY - minY + 1) * scaleY;
+
+		Rectangle r = new Rectangle(rectX, rectY, rectWidth, rectHeight);
+		r.setFill(Color.TRANSPARENT);
+		r.setStroke(Color.GREEN);
+		r.setStrokeWidth(2);
+		return r;
+	}
+
+	private void clearRectangles() {
+		Pane parentPane = (Pane) imageView.getParent();
+		for (Node node : activeRectangles) {
+			parentPane.getChildren().remove(node);
+		}
+		activeRectangles.clear();  // Clear the list after removing the nodes
+	}
+
+	private void showRectanglesOnPills() {
+		Pane parentPane = (Pane) imageView.getParent();
+		int count = 0;  // Counter for labels
+
+		for (PillType pillType : selectedPillTypes) {
+			for (Pill pill : pillType.getPills().values()) {
+				Rectangle r = getRectangleForPill(pill);
+				Label l = new Label(String.valueOf(count++));
+				l.setLayoutX(r.getX());
+				l.setLayoutY(r.getY());
+
+				parentPane.getChildren().addAll(r, l);
+				activeRectangles.add(r);  // Keep track of the rectangle
+				activeRectangles.add(l);  // Keep track of the label
+			}
 		}
 	}
 
@@ -472,8 +570,68 @@ public class BaseController implements Initializable {
 				} else if (mode3box.isSelected()) {
 					bwImageView.setImage(ib.buildRandomColoredImage());
 				}
+
+
 				//labeler.addPillType(new PillType("Test", foundColor, 0, ip.getSetToStoreRelationA()));
 			}
+
+			int identification = labeler.getID(location);
+			if (identification != -1) {
+				PillType pt = labeler.getPillType(labeler.getID(location));
+				Integer rootOfClick = find(pt.getRelation(), location);
+				Pill p = pt.getPills().get(rootOfClick);
+				System.out.println(p);
+
+				if (selectedPillTypes.contains(pt)) {
+					selectedPillTypes.remove(pt);
+				} else {
+					selectedPillTypes.add(pt);
+				}
+
+				//TODO CLEAR THE RECTANGLES
+
+				clearRectangles();
+				//TODO SHOW RECTANGLES ON PILLS OVER THE IMAGE
+				showRectanglesOnPills();
+				/*int count = 0;
+				for (PillType pillType : selectedPillTypes) {
+					for (Pill pill : pillType.getPills().values()) {
+						int minX = Integer.MAX_VALUE;
+						int maxX = Integer.MIN_VALUE;
+						int minY = Integer.MAX_VALUE;
+						int maxY = Integer.MIN_VALUE;
+
+						for (int i = 0; i < pill.getRelation().length; i++) {
+							if (find(pill.getRelation(), i) == pill.getRelationRoot()) {
+								int row = i / (int) image.getWidth();
+								int col = i % (int) image.getWidth();
+
+								if (row < minY) minY = row;
+								if (row > maxY) maxY = row;
+								if (col < minX) minX = col;
+								if (col > maxX) maxX = col;
+							}
+						}
+
+						javafx.scene.shape.Rectangle r = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+						// Create and position the label
+						javafx.scene.control.Label l = new Label(String.valueOf(count));
+						l.setLayoutX(minX - 14); // Position the label at the top-left corner of the rectangle
+						l.setLayoutY(minY - 14);
+						Pane parentPane = (Pane) imageView.getParent();
+
+						// Increment the count for the next label
+						count++;
+						r.setFill(javafx.scene.paint.Color.TRANSPARENT); // Set the fill to transparent
+						r.setStroke(Color.RED); // Set the stroke color to green
+						r.setStrokeWidth(2);
+					}
+
+				}
+				count = 0;*/
+
+			}
+
 		});
 		viewFacility.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			// This will be called whenever the user selects a different item in the list

@@ -9,6 +9,16 @@ public class PillType {
 	private String name = "";
 	private int color1 = 0;
 	private int color2 = 0;
+	private int amount = 0;
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 	private HashMap<Integer, Pill> pills = new HashMap<>();
 
 	@Override

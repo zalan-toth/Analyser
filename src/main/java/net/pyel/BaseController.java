@@ -12,6 +12,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -85,7 +86,9 @@ public class BaseController implements Initializable {
 
 
 	@FXML
-	public Text pillSelected = new Text();
+	public TextField typeNameBox = new TextField();
+	@FXML
+	public Text pillsSelected = new Text();
 
 	public CategoryAxis redChartCategoryAxis = new CategoryAxis();
 	public NumberAxis redChartNumberAxis = new NumberAxis();
@@ -411,7 +414,8 @@ public class BaseController implements Initializable {
 	public void addLabel() {
 		int identification = labeler.getID(location);
 		if (identification == -1) {
-			labeler.addPillType(new PillType("Test", color1, color2, ip.getSetToStoreRelationA()), ip.getSingularPillData());
+			labeler.addPillType(new PillType(typeNameBox.getText(), color1, color2, ip.getSetToStoreRelationA()), ip.getSingularPillData());
+			typeNameBox.clear();
 			System.out.println(labeler.getPillType(labeler.getID(location)));
 
 			//PROCESS EACH PILL
@@ -516,25 +520,29 @@ public class BaseController implements Initializable {
 		}
 		Collections.sort(uniqueRoots);
 
-		int count = 0;  // Counter for labels
 		for (PillType pillType : selectedPillTypes) {
+			int count = 0;
 			for (Pill pill : pillType.getPills().values()) {
 				for (int v = 0; v < uniqueRoots.size(); v++) {
 					if (uniqueRoots.get(v) == pill.getRelationRoot()) {
 						pill.setTemporaryNumber(v);
 					}
 				}
+				count++;
 			}
+			pillType.setAmount(count);
+			count = 0;
 		}
 
-
+		int pillCount = 0;
 		for (PillType pillType : selectedPillTypes) {
 			for (Pill pill : pillType.getPills().values()) {
+				pillCount++;
 				Rectangle r = getRectangleForPill(pill);
 				Label l = new Label(String.valueOf(pill.getTemporaryNumber()));
 				l.setLayoutX(r.getX());
 				l.setLayoutY(r.getY());
-				Tooltip tooltip = new Tooltip(pillType.getName() + "\nOrder number:" + pill.getTemporaryNumber() + "\nPixels: " + pill.getPixelUnits());
+				Tooltip tooltip = new Tooltip("Name: " + pillType.getName() + "\n" + pillType.getPills().size() + " pills have this type." + "\nOrder in pilltype: " + pill.getNumber() + "\nOrder among all selected pills: " + pill.getTemporaryNumber() + "\nPixels: " + pill.getPixelUnits());
 				Tooltip.install(r, tooltip);
 
 				r.setOnMouseClicked(event -> {
@@ -549,6 +557,8 @@ public class BaseController implements Initializable {
 				activeRectangles.add(l);  // Keep track of the label
 			}
 		}
+
+		pillsSelected.setText(pillCount + " pills selected");
 	}
 
 	private void removePillTypeSelection(PillType pillType) {

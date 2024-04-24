@@ -90,6 +90,12 @@ public class BaseController implements Initializable {
 	@FXML
 	public Text pillsSelected = new Text();
 
+	@FXML
+	public TextField minPixelsBox = new TextField();
+	@FXML
+	public TextField maxPixelsBox = new TextField();
+	@FXML
+	public Text pixelText = new Text();
 	public CategoryAxis redChartCategoryAxis = new CategoryAxis();
 	public NumberAxis redChartNumberAxis = new NumberAxis();
 	public BarChart<String, Number> redChart = new BarChart<>(redChartCategoryAxis, redChartNumberAxis);
@@ -186,6 +192,7 @@ public class BaseController implements Initializable {
 			ip.processMe();
 			ib.setImage(ip.getImage());
 			ib.setUp();
+
 
 			labeler = new Labeler(ip.getSizeOfSet());
 
@@ -575,6 +582,16 @@ public class BaseController implements Initializable {
 
 	private void removePillTypeSelection(PillType pillType) {
 		selectedPillTypes.remove(pillType);
+	}
+
+
+	@FXML
+	private void adjustPixelLimits() {
+		System.out.println("Adjusted pixel limits/threshold");
+
+		labeler.setMaxPixels(Integer.parseInt(maxPixelsBox.getText()));
+		labeler.setMinPixels(Integer.parseInt(minPixelsBox.getText()));
+		pixelText.setText("PIXEL THRESHOLD (" + labeler.getMinPixels() + "-" + labeler.getMaxPixels() + ")");
 	}
 
 	private void updateUIAfterPillTypeRemoval() {

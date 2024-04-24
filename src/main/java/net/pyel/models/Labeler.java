@@ -7,32 +7,67 @@ import java.util.Iterator;
 
 public class Labeler {
 
+	private int minPixels = 100;
+	private int maxPixels = 10000;
+
+	public int getMinPixels() {
+		return minPixels;
+	}
+
+	public void setMinPixels(int minPixels) {
+		this.minPixels = minPixels;
+	}
+
+	public int getMaxPixels() {
+		return maxPixels;
+	}
+
+	public void setMaxPixels(int maxPixels) {
+		this.maxPixels = maxPixels;
+	}
+
+	public int[] getRelationSet() {
+		return relationSet;
+	}
+
+	public void setRelationSet(int[] relationSet) {
+		this.relationSet = relationSet;
+	}
+
+	public int[] getIdSet() {
+		return idSet;
+	}
+
+	public void setIdSet(int[] idSet) {
+		this.idSet = idSet;
+	}
+
 	/*private ArrayList<PillType> pillTypes = new ArrayList<>();
 
-	public Labeler(ArrayList<PillType> pillTypes) {
-		this.pillTypes = pillTypes;
-	}
+		public Labeler(ArrayList<PillType> pillTypes) {
+			this.pillTypes = pillTypes;
+		}
 
-	public Labeler() {
-	}
+		public Labeler() {
+		}
 
-	public void addPillType(PillType pillType) {
-		pillTypes.add(pillType);
-	}
+		public void addPillType(PillType pillType) {
+			pillTypes.add(pillType);
+		}
 
 
-	public void removeAllPillTypes() {
-		pillTypes = null;
-		pillTypes = new ArrayList<>();
-	}
+		public void removeAllPillTypes() {
+			pillTypes = null;
+			pillTypes = new ArrayList<>();
+		}
 
-	public ArrayList<PillType> getPillTypes() {
-		return pillTypes;
-	}
+		public ArrayList<PillType> getPillTypes() {
+			return pillTypes;
+		}
 
-	public void setPillTypes(ArrayList<PillType> pillTypes) {
-		this.pillTypes = pillTypes;
-	}*/
+		public void setPillTypes(ArrayList<PillType> pillTypes) {
+			this.pillTypes = pillTypes;
+		}*/
 	int[] relationSet;
 	int[] idSet;
 	private HashMap<Integer, PillType> pillTypes = new HashMap<>(); //map id to pilltype
@@ -113,7 +148,7 @@ public class Labeler {
 			int root = rootIterator.next();
 			int[] set = rootMappedToSet.get(root);
 			int pixelCount = calculatePixelAmountForArray(set);
-			if (pixelCount < 100 || pixelCount > 10000) {
+			if (pixelCount < minPixels || pixelCount > maxPixels) {
 				rootIterator.remove(); //removes from uniqueRoots
 				rootMappedToSet.remove(root);
 			}

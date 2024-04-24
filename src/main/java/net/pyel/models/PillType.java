@@ -31,12 +31,25 @@ public class PillType {
 				'}';
 	}
 
-	public void addPill(Pill pill) {
-		if ((pill.getPixelUnits() > 4) && (pill.getPixelUnits() < 50000)) {
+	public void removePill(Pill pill) {
+		/*if ((pill.getPixelUnits() > 0) && (pill.getPixelUnits() < 50000)) {
 			pills.put(pill.getRelationRoot(), pill);
 		} else {
 			System.out.println("PILL ADD FAILED DUE TO SMALL OR TOO BIG PIXEL SIZE");
-		}
+		}*/
+
+		pills.remove(pill.getRelationRoot());
+		//pills.put(pill.getRelationRoot(), pill);
+	}
+
+	public void addPill(Pill pill) {
+		/*if ((pill.getPixelUnits() > 0) && (pill.getPixelUnits() < 50000)) {
+			pills.put(pill.getRelationRoot(), pill);
+		} else {
+			System.out.println("PILL ADD FAILED DUE TO SMALL OR TOO BIG PIXEL SIZE");
+		}*/
+
+		pills.put(pill.getRelationRoot(), pill);
 		//pills.put(pill.getRelationRoot(), pill);
 	}
 

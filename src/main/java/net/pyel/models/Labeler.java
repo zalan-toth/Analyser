@@ -3,6 +3,7 @@ package net.pyel.models;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Labeler {
 
@@ -96,7 +97,10 @@ public class Labeler {
 
 					int[] emptySet = new int[singularPill.getSizeOfSet()];
 					Arrays.fill(emptySet, -1);
-					rootMappedToSet.put(find(singularPill.getSetToStoreRelationA(), singularPill.getSetToStoreRelationA()[v]), emptySet);
+					int[] relA = singularPill.getSetToStoreRelationA();
+					int currentPixel = singularPill.getSetToStoreRelationA()[v];
+					int rootFound = find(relA, currentPixel);
+					rootMappedToSet.put(rootFound, emptySet);
 					rootMappedToSet.get(find(singularPill.getSetToStoreRelationA(), singularPill.getSetToStoreRelationA()[v]))[v] = v;
 				} else {
 					rootMappedToSet.get(find(singularPill.getSetToStoreRelationA(), singularPill.getSetToStoreRelationA()[v]))[v] = v;
@@ -104,12 +108,47 @@ public class Labeler {
 
 			}
 		}
+		Iterator<Integer> rootIterator = uniqueRoots.iterator();
+		while (rootIterator.hasNext()) {
+			int root = rootIterator.next();
+			int[] set = rootMappedToSet.get(root);
+			int pixelCount = calculatePixelAmountForArray(set);
+			if (pixelCount < 100 || pixelCount > 10000) {
+				rootIterator.remove(); //removes from uniqueRoots
+				rootMappedToSet.remove(root);
+			}
+		}
+		/*for (int v = 0; v < uniqueRoots.size(); v++) {
+			int[] tempArray = rootMappedToSet.get(uniqueRoots.get(v));
+			int px = calculatePixelAmountForArray(tempArray);
+			if ((px < 400) || (px > 5000)) {
+				int rootFound = find(tempArray, v);
+				rootMappedToSet.remove(rootFound);
+				uniqueRoots.remove(v);
+				//uniqueRoots.get();
+				/*for (int i = 0; i < uniqueRoots.size(); i++) {
+					if (uniqueRoots.get(i) == rootFound) {
+						uniqueRoots.remove(i);
+					}
+				}
+			}
+		}*/
 		for (int v = 0; v < uniqueRoots.size(); v++) {
 			int[] tempArray = rootMappedToSet.get(uniqueRoots.get(v));
 			pillTypes.get(idNumber).addPill(new Pill(singularPill.getColor1(), singularPill.getColor2(), v + 1, uniqueRoots.get(v), -1, -1, calculatePixelAmountForArray(tempArray), tempArray));
 
 			System.out.println("!: " + pillTypes.get(idNumber).getPills().get(uniqueRoots.get(v)).getNumber());
 		}
+		/*for (int v = 0; v < pillTypes.get(idNumber).getPills().size(); v++) { //Pill pill : pillTypes.get(idNumber).getPills().values()
+
+			Integer root = uniqueRoots.get(v);
+			Pill pill = pillTypes.get(idNumber).getPills().get(root);
+			if ((pill.getPixelUnits() < 200) || (pill.getPixelUnits() > 5000)) {
+				rootMappedToSet.remove(pill.getRelationRoot());
+				pillTypes.get(idNumber).removePill(pill);
+				uniqueRoots.remove(v);
+			}
+		}*/
 		System.out.println("Found pills: " + uniqueRoots.size());
 	}
 

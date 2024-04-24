@@ -168,6 +168,7 @@ public class BaseController implements Initializable {
 				image = convertToFxImage(ImageIO.read(selectedFile));
 			} catch (IOException e) {
 			}
+			image = new Image(selectedFile.toURI().toString(), 512, 512, false, false); //downscale
 			id = new ImageData(image);
 			ip = new ImageProcess(image);
 			ip.processMe();
@@ -448,8 +449,8 @@ public class BaseController implements Initializable {
 		int width = (int) imageView.getImage().getWidth();
 		int height = (int) imageView.getImage().getHeight();
 
-		double fitWidth = image.getWidth() / 1.83;
-		double fitHeight = image.getHeight() / 1.83;
+		double fitWidth = imageView.getFitWidth(); //image.getWidth() / 1.83; //TODO 700px vs 1280px original
+		double fitHeight = imageView.getFitHeight(); //TODO 484px vs 720px original
 
 		// Determine scale factors
 		double scaleX = fitWidth / width;
@@ -531,7 +532,6 @@ public class BaseController implements Initializable {
 				count++;
 			}
 			pillType.setAmount(count);
-			count = 0;
 		}
 
 		int pillCount = 0;

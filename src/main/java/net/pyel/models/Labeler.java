@@ -96,14 +96,13 @@ public class Labeler {
 	}
 
 	public static int find(int[] a, int id) {
-		// Check if the id is -1 or out of bounds, and return -1 immediately.
+		// Check if the id is -1 or out of bounds, and return -1
 		if (id == -1 || id >= a.length) {
 			return -1;
 		}
 
 		while (a[id] != id) {
-			// Additional check to prevent ArrayIndexOutOfBoundsException
-			// if a[id] is -1 or out of valid range (this depends on your logic)
+			// Additional check to prevent exeption
 			if (a[id] == -1 || a[id] >= a.length) {
 				return -1;
 			}

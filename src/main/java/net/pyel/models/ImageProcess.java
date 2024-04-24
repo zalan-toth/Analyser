@@ -10,6 +10,9 @@ public class ImageProcess {
 	int width;
 	int height;
 	int sizeOfSet;
+	int redThreshold = 0;
+	int greenThreshold = 0;
+	int blueThreshold = 0;
 	int[] setToStoreARGB;
 	int[] setToStoreRelation; //for first color
 	int[] setToStoreRelationF;  //for second color
@@ -19,6 +22,29 @@ public class ImageProcess {
 	int backgroundColor = 0xFFFFFFFF;
 	double colorMargin = 0;
 
+	public int getRedThreshold() {
+		return redThreshold;
+	}
+
+	public void setRedThreshold(int redThreshold) {
+		this.redThreshold = redThreshold;
+	}
+
+	public int getGreenThreshold() {
+		return greenThreshold;
+	}
+
+	public void setGreenThreshold(int greenThreshold) {
+		this.greenThreshold = greenThreshold;
+	}
+
+	public int getBlueThreshold() {
+		return blueThreshold;
+	}
+
+	public void setBlueThreshold(int blueThreshold) {
+		this.blueThreshold = blueThreshold;
+	}
 
 	public boolean isDebug() {
 		return debug;
@@ -176,6 +202,14 @@ public class ImageProcess {
 
 	public boolean colorsCheck(int colorValue, int colorInput1, int colorInput2) {
 		return (colorValue == colorInput1 || colorValue == colorInput2);
+	}
+
+	public boolean simpleColorCheck(int colorValue, int colorInput) {
+		return (colorValue == colorInput);
+	}
+
+	public boolean thresholdColorCheck(int colorValue, int colorInput) {
+		return (colorValue == colorInput);
 	}
 
 	public void createRelationSet(int colorInput1, int colorInput2, int mode) {

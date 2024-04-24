@@ -130,6 +130,18 @@ public class BaseController implements Initializable {
 	@FXML
 	public Slider bogoSlider = new Slider();
 	@FXML
+	public Slider redValueSlider = new Slider();
+	@FXML
+	public Slider greenValueSlider = new Slider();
+	@FXML
+	public Slider blueValueSlider = new Slider();
+	@FXML
+	public Text redValueText = new Text();
+	@FXML
+	public Text greenValueText = new Text();
+	@FXML
+	public Text blueValueText = new Text();
+	@FXML
 	public Text bogoText = new Text();
 	@FXML
 	public Text saturationText = new Text();
@@ -702,6 +714,56 @@ public class BaseController implements Initializable {
 			}
 		});
 
+		redValueSlider.valueProperty().addListener(new ChangeListener<>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldValue,
+					Number newValue) {
+				redValueText.setText(String.valueOf(newValue.intValue() / 2));
+				//id.setBogoAmount(newValue.intValue() / 2);
+
+				refresh();
+				//betLabel.textProperty().setValue(
+				//String.valueOf(newValue.intValue());
+
+			}
+		});
+
+		greenValueSlider.valueProperty().addListener(new ChangeListener<>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldValue,
+					Number newValue) {
+				greenValueText.setText(String.valueOf(newValue.intValue() / 2));
+				//id.setBogoAmount(newValue.intValue() / 2);
+
+				refresh();
+				//betLabel.textProperty().setValue(
+				//String.valueOf(newValue.intValue());
+
+			}
+		});
+
+		blueValueSlider.valueProperty().addListener(new ChangeListener<>() {
+
+			@Override
+			public void changed(
+					ObservableValue<? extends Number> observableValue,
+					Number oldValue,
+					Number newValue) {
+				blueValueText.setText(String.valueOf(newValue.intValue() / 2));
+				//id.setBogoAmount(newValue.intValue() / 2);
+
+				refresh();
+				//betLabel.textProperty().setValue(
+				//String.valueOf(newValue.intValue());
+
+			}
+		});
 		bogoSlider.valueProperty().addListener(new ChangeListener<>() {
 
 			@Override

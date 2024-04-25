@@ -533,8 +533,14 @@ public class BaseController implements Initializable {
 		}
 
 		for (int v = 0; v < allRel.length; v++) {
-			if (!uniqueRoots.contains(find(allRel, v))) {
-				uniqueRoots.add(find(allRel, v));
+			int root = find(allRel, v);
+			if (!uniqueRoots.contains(root)) {
+				for (PillType pillType : selectedPillTypes) {
+					if (pillType.getPills().containsKey(root)) {
+						uniqueRoots.add(root);
+					}
+				}
+
 			}
 
 		}
@@ -738,7 +744,8 @@ public class BaseController implements Initializable {
 					ObservableValue<? extends Number> observableValue,
 					Number oldValue,
 					Number newValue) {
-				redValueText.setText(String.valueOf(newValue.intValue() / 2));
+				redValueText.setText(String.valueOf((int) (newValue.intValue() * 1.28)));
+				ip.setRedThreshold((int) (newValue.intValue() * 1.28));
 				//id.setBogoAmount(newValue.intValue() / 2);
 
 				refresh();
@@ -755,7 +762,8 @@ public class BaseController implements Initializable {
 					ObservableValue<? extends Number> observableValue,
 					Number oldValue,
 					Number newValue) {
-				greenValueText.setText(String.valueOf(newValue.intValue() / 2));
+				greenValueText.setText(String.valueOf((int) (newValue.intValue() * 1.28)));
+				ip.setGreenThreshold((int) (newValue.intValue() * 1.28));
 				//id.setBogoAmount(newValue.intValue() / 2);
 
 				refresh();
@@ -772,7 +780,8 @@ public class BaseController implements Initializable {
 					ObservableValue<? extends Number> observableValue,
 					Number oldValue,
 					Number newValue) {
-				blueValueText.setText(String.valueOf(newValue.intValue() / 2));
+				blueValueText.setText(String.valueOf((int) (newValue.intValue() * 1.28)));
+				ip.setBlueThreshold((int) (newValue.intValue() * 1.28));
 				//id.setBogoAmount(newValue.intValue() / 2);
 
 				refresh();

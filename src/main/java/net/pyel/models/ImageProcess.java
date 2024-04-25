@@ -209,7 +209,36 @@ public class ImageProcess {
 	}
 
 	public boolean thresholdColorCheck(int colorValue, int colorInput) {
-		return (colorValue == colorInput);
+
+		int colorInputA = (colorInput >> 24) & 0xFF; //color we are looking for
+		int colorInputR = (colorInput >> 16) & 0xFF; //TODO manipulate this
+		int colorInputG = (colorInput >> 8) & 0xFF;
+		int colorInputB = colorInput & 0xFF;
+
+		int colorValueA = (colorValue >> 24) & 0xFF; //colorvalue at the specified pixel
+		int colorValueR = (colorValue >> 16) & 0xFF;
+		int colorValueG = (colorValue >> 8) & 0xFF;
+		int colorValueB = colorValue & 0xFF;
+
+		int maxValueForColorInputR = colorInputR + redThreshold;
+		int minValueForColorInputR = colorInputR - redThreshold;
+		int maxValueForColorInputG = colorInputG + greenThreshold;
+		int minValueForColorInputG = colorInputG - greenThreshold;
+		int maxValueForColorInputB = colorInputB + blueThreshold;
+		int minValueForColorInputB = colorInputB - blueThreshold;
+
+
+		if ((colorValueR <= maxValueForColorInputR) && (colorValueR >= minValueForColorInputR)) {
+
+			if ((colorValueG <= maxValueForColorInputG) && (colorValueG >= minValueForColorInputG)) {
+
+				if ((colorValueB <= maxValueForColorInputB) && (colorValueB >= minValueForColorInputB)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public void createRelationSet(int colorInput1, int colorInput2, int mode) {
@@ -219,10 +248,10 @@ public class ImageProcess {
 			for (int v = 0; v < setToStoreRelation.length; v++) {
 
 				int colorValue = setToStoreARGB[v];
-				if (colorValue == colorInput1) { //check which colors to process
+				if (thresholdColorCheck(colorValue, colorInput1)) { //check which colors to process
 					setToStoreRelation[v] = -2; //-2 means we have to process it!
 					setToStoreRelationA[v] = -2; //-2 means we have to process it!
-				} else if (colorValue == colorInput2) {
+				} else if (thresholdColorCheck(colorValue, colorInput2)) {
 					setToStoreRelationF[v] = -2; //-2 means we have to process it!
 					setToStoreRelationA[v] = -2; //-2 means we have to process it!
 				} else {

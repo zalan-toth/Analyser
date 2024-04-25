@@ -46,10 +46,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="884.0" prefWidth="1434" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.pyel.BaseController">
+<VBox prefHeight="884.0" prefWidth="1434" style="-fx-background-color: #00001e;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.pyel.BaseController">
     <children>
         <MenuBar>
             <menus>
@@ -70,9 +75,9 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <AnchorPane prefHeight="857.0" prefWidth="1443.0">
+        <AnchorPane prefHeight="857.0" prefWidth="1443.0" style="-fx-background-image: #00001e;">
             <children>
-                <BarChart fx:id="redChart" layoutX="34.0" layoutY="616.0" prefHeight="213.0" prefWidth="495.0" stylesheets="@css/chart.css">
+                <BarChart fx:id="redChart" layoutX="14.0" layoutY="683.0" prefHeight="162.0" prefWidth="505.0" stylesheets="@css/chart.css">
                     <xAxis>
                         <CategoryAxis fx:id="redChartCategoryAxis" side="BOTTOM" />
                     </xAxis>
@@ -80,67 +85,339 @@
                         <NumberAxis fx:id="redChartNumberAxis" side="LEFT" />
                     </yAxis>
                 </BarChart>
-                <Slider fx:id="brightnessSlider" layoutX="74.0" layoutY="564.0" />
-                <Slider fx:id="hueSlider" layoutX="234.0" layoutY="564.0" />
-                <Slider fx:id="saturationSlider" layoutX="402.0" layoutY="560.0" />
-                <Text layoutX="74.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brightness" />
-                <Text layoutX="414.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saturation" />
-                <Text layoutX="234.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hue" />
-                <Slider fx:id="bogoSlider" layoutX="566.0" layoutY="560.0" />
-                <Text layoutX="578.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bogo" />
-                <Text fx:id="bogoText" layoutX="566.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-                <Text fx:id="saturationText" layoutX="400.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-                <Text fx:id="hueText" layoutX="233.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-                <Text fx:id="brightnessText" layoutX="74.0" layoutY="557.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-                <ImageView fx:id="originalImageView" fitHeight="178.0" fitWidth="211.0" layoutX="1275.0" layoutY="668.0" pickOnBounds="true" preserveRatio="true" />
-                <Button layoutX="636.0" layoutY="531.0" mnemonicParsing="false" onMouseClicked="#letsdobogo" text="Letsgoo" textFill="#085138" />
-                <ImageView fx:id="bwImageView" fitHeight="512.0" fitWidth="512.0" layoutX="995.0" pickOnBounds="true" preserveRatio="true" />
-                <CheckBox fx:id="dualToneCheckBox" layoutX="574.0" layoutY="641.0" mnemonicParsing="false" text="Dual Tone" />
-                <Text fx:id="color1text" layoutX="570.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-                <Text fx:id="color2text" layoutX="570.0" layoutY="702.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" />
-                <CheckBox fx:id="mode1box" layoutX="587.0" layoutY="403.0" mnemonicParsing="false" onAction="#selectMode1" selected="true" text="B&amp;W select" />
-                <CheckBox fx:id="mode2box" layoutX="587.0" layoutY="429.0" mnemonicParsing="false" onAction="#selectMode2" text="Colored select" />
-                <Pane layoutX="14.0" layoutY="14.0" prefHeight="512.0" prefWidth="512.0">
+                <Slider fx:id="bogoSlider" layoutX="308.0" layoutY="631.0" />
+                <Text fill="WHITE" layoutX="456.0" layoutY="643.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bogo">
+               <font>
+                  <Font size="19.0" />
+               </font></Text>
+                <Text fx:id="bogoText" fill="WHITE" layoutX="480.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="RIGHT">
+               <font>
+                  <Font size="25.0" />
+               </font></Text>
+                <ImageView fx:id="originalImageView" fitHeight="143.0" fitWidth="143.0" layoutX="157.0" layoutY="533.0" pickOnBounds="true" preserveRatio="true" />
+                <Button layoutX="308.0" layoutY="649.0" mnemonicParsing="false" onMouseClicked="#letsdobogo" style="-fx-background-color: white;" text="Bogo Mixup" textFill="#00001e">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+                <CheckBox fx:id="dualToneCheckBox" layoutX="550.0" layoutY="344.0" mnemonicParsing="false" text="Dual Tone">
+               <font>
+                  <Font name="Saab" size="20.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.4597315436241611">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.48657718120805366">
+                           <color>
+                              <Color red="0.9176470637321472" green="0.6313725709915161" blue="0.9843137264251709" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9966442953020134">
+                           <color>
+                              <Color red="0.9176470637321472" green="0.6313725709915161" blue="0.9843137264251709" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9176470637321472" green="0.6313725709915161" blue="0.9843137264251709" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill></CheckBox>
+                <Text fx:id="color1text" fill="WHITE" layoutX="549.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font size="18.0" />
+               </font></Text>
+                <Text fx:id="color2text" fill="WHITE" layoutX="548.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font size="20.0" />
+               </font></Text>
+                <CheckBox fx:id="mode1box" layoutX="552.0" layoutY="221.0" mnemonicParsing="false" onAction="#selectMode1" selected="true" text="B&amp;W Output" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font></CheckBox>
+                <Pane layoutX="14.0" layoutY="14.0" prefHeight="512.0" prefWidth="512.0" style="-fx-background-color: #00ff6a;">
                     <children>
+                  <Text fill="#00001e" layoutX="36.0" layoutY="392.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="EDITED IMAGE" wrappingWidth="383.41064453125">
+                     <font>
+                        <Font size="54.0" />
+                     </font>
+                  </Text>
                         <ImageView fx:id="imageView" fitHeight="512.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                 </Pane>
-                <CheckBox fx:id="pillDataCheckBox" layoutX="766.0" layoutY="535.0" mnemonicParsing="false" text="showLabeling" />
-                <TextField fx:id="typeNameBox" layoutX="769.0" layoutY="604.0" promptText="name" />
-                <Text layoutX="729.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" textAlignment="RIGHT" />
-                <Button layoutX="769.0" layoutY="671.0" mnemonicParsing="false" onAction="#addLabel" onMouseClicked="#letsdobogo" text="ADD" textFill="#4f2208" />
-                <Text layoutX="775.0" layoutY="588.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LABELER">
-                    <font>
-                        <Font size="25.0" />
-                    </font>
-                </Text>
-                <Button disable="true" layoutX="869.0" layoutY="671.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="UPDATE" textFill="#4f2208" />
-                <Button disable="true" layoutX="866.0" layoutY="705.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="REMOVE" textFill="#4f2208" />
-                <Button disable="true" layoutX="769.0" layoutY="705.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" text="RESET" textFill="#4f2208" />
-                <Text fx:id="pillsSelected" fill="#045124" layoutX="894.0" layoutY="815.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 pills selected" textAlignment="RIGHT">
+                <TextField fx:id="typeNameBox" layoutX="1090.0" layoutY="595.0" prefHeight="36.0" prefWidth="373.0" promptText="name">
+               <font>
+                  <Font size="19.0" />
+               </font></TextField>
+                <Text fill="WHITE" layoutX="1010.0" layoutY="622.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" textAlignment="RIGHT">
+               <font>
+                  <Font size="28.0" />
+               </font></Text>
+                <Button layoutX="1361.0" layoutY="650.0" mnemonicParsing="false" onAction="#addLabel" onMouseClicked="#letsdobogo" style="-fx-background-color: #f7ff84;" text="ADD" textFill="#00001e">
+               <font>
+                  <Font size="26.0" />
+               </font></Button>
+                <Button disable="true" layoutX="1281.0" layoutY="668.0" mnemonicParsing="false" onAction="#selectAllPills" onMouseClicked="#letsdobogo" style="-fx-background-color: #f7ff84;" text="RESET" textFill="#00001e">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+                <Text fx:id="pillsSelected" fill="WHITE" layoutX="1079.0" layoutY="564.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 pills selected" textAlignment="RIGHT">
                     <font>
                         <Font size="23.0" />
                     </font>
                 </Text>
-                <CheckBox fx:id="multiSelectCheckBox" layoutX="574.0" layoutY="720.0" mnemonicParsing="false" text="Multi Select" />
-                <CheckBox fx:id="mode3box" layoutX="586.0" layoutY="453.0" mnemonicParsing="false" onAction="#selectMode3" text="Random color select" />
-                <ImageView fx:id="grayImageView" fitHeight="101.0" fitWidth="117.0" layoutX="1349.0" layoutY="566.0" pickOnBounds="true" preserveRatio="true" />
-            <Slider fx:id="redValueSlider" layoutX="586.0" layoutY="777.0" />
-            <Text layoutX="536.0" layoutY="769.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLOR THRESHOLD" />
-            <Text fx:id="redValueText" layoutX="740.0" layoutY="789.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-            <Text layoutX="550.0" layoutY="789.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RED" textAlignment="RIGHT" />
-            <Text layoutX="536.0" layoutY="814.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GREEN" textAlignment="RIGHT" />
+                <CheckBox fx:id="multiSelectCheckBox" layoutX="550.0" layoutY="385.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="162.0" text="Multi Select">
+               <font>
+                  <Font name="Saab" size="20.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.8933932781219482" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color green="1.0" blue="0.8933932781219482" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.4597315436241611">
+                           <color>
+                              <Color red="0.1899999976158142" green="1.0" blue="0.7986178398132324" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.889261744966443">
+                           <color>
+                              <Color red="0.6370000243186951" green="0.804470419883728" blue="0.9800000190734863" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9966442953020134">
+                           <color>
+                              <Color red="0.9176470637321472" green="0.6313725709915161" blue="0.9843137264251709" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9176470637321472" green="0.6313725709915161" blue="0.9843137264251709" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </textFill></CheckBox>
+                <ImageView fx:id="grayImageView" fitHeight="143.0" fitWidth="143.0" layoutX="14.0" layoutY="533.0" pickOnBounds="true" preserveRatio="true" />
+            <Slider fx:id="redValueSlider" layoutX="586.0" layoutY="776.0" />
+            <Text fill="WHITE" layoutX="536.0" layoutY="759.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLOR THRESHOLD">
+               <font>
+                  <Font size="17.0" />
+               </font></Text>
+            <Text fx:id="redValueText" fill="#fc9477" layoutX="740.0" layoutY="789.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+            <Text fill="#fc9477" layoutX="550.0" layoutY="789.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RED" textAlignment="RIGHT" />
+            <Text fill="#00ff62" layoutX="536.0" layoutY="814.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GREEN" textAlignment="RIGHT" />
             <Slider fx:id="greenValueSlider" layoutX="586.0" layoutY="801.0" />
-            <Text fx:id="greenValueText" layoutX="740.0" layoutY="813.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-            <Text layoutX="542.0" layoutY="842.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BLUE" textAlignment="RIGHT" />
+            <Text fx:id="greenValueText" fill="#00ff62" layoutX="740.0" layoutY="814.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+            <Text fill="#89c9fa" layoutX="542.0" layoutY="842.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BLUE" textAlignment="RIGHT" />
             <Slider fx:id="blueValueSlider" layoutX="586.0" layoutY="829.0" />
-            <Text fx:id="blueValueText" layoutX="740.0" layoutY="842.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-            <TextField fx:id="minPixelsBox" layoutX="1053.0" layoutY="693.0" prefHeight="24.0" prefWidth="71.0" promptText="Minimum pixels" text="100" />
-            <Button layoutX="1020.0" layoutY="663.0" mnemonicParsing="false" onAction="#adjustPixelLimits" onMouseClicked="#letsdobogo" text="ADJUST" textFill="#4f2208" />
-            <TextField fx:id="maxPixelsBox" layoutX="1053.0" layoutY="726.0" prefHeight="24.0" prefWidth="71.0" promptText="Minimum pixels" text="10000" />
-            <Text layoutX="1017.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MIN" textAlignment="RIGHT" />
-            <Text layoutX="1017.0" layoutY="743.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAX" textAlignment="RIGHT" />
-            <Text fx:id="pixelText" layoutX="1013.0" layoutY="769.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PIXEL THRESHOLD (100-10000)" textAlignment="RIGHT" />
+            <Text fx:id="blueValueText" fill="#89c9fa" layoutX="740.0" layoutY="841.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+            <TextField fx:id="minPixelsBox" layoutX="582.0" layoutY="651.0" prefHeight="24.0" prefWidth="71.0" promptText="Minimum pixels" text="100" />
+            <Button layoutX="668.0" layoutY="661.0" mnemonicParsing="false" onAction="#adjustPixelLimits" onMouseClicked="#letsdobogo" style="-fx-background-color: #00ff6a;" text="ADJUST" textFill="#00001e">
+               <font>
+                  <Font size="23.0" />
+               </font></Button>
+            <TextField fx:id="maxPixelsBox" layoutX="582.0" layoutY="683.0" prefHeight="24.0" prefWidth="71.0" promptText="Minimum pixels" text="10000" />
+            <Text fill="WHITE" layoutX="546.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MIN" textAlignment="RIGHT" />
+            <Text fill="WHITE" layoutX="546.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MAX" textAlignment="RIGHT" />
+            <Text fx:id="pixelText" fill="WHITE" layoutX="542.0" layoutY="643.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PIXEL THRESHOLD (100-10000)" textAlignment="RIGHT">
+               <font>
+                  <Font size="17.0" />
+               </font></Text>
+            <Button layoutX="308.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#makeHue" prefHeight="39.0" prefWidth="123.0" style="-fx-background-color: white;" text="MakeHue" textFill="#00001e">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="435.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#resetImage" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: white;" text="Reset" textFill="#00001e">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Pane layoutX="963.0" layoutY="14.0" prefHeight="512.0" prefWidth="512.0" style="-fx-background-color: #00ff6a;">
+               <children>
+                  <Text fill="#00001e" layoutX="36.0" layoutY="392.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECTION OUTPUT" wrappingWidth="383.41064453125">
+                     <font>
+                        <Font size="54.0" />
+                     </font>
+                  </Text>
+                      <ImageView fx:id="bwImageView" fitHeight="512.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Text fill="#00ff6a" layoutX="547.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt; &gt; &gt; &gt; &gt;" textAlignment="CENTER">
+               <font>
+                  <Font name="FontAwesome" size="76.0" />
+               </font>
+            </Text>
+            <Text layoutX="545.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OUTPUT SETTINGS" wrappingWidth="322.171875">
+               <font>
+                  <Font name="Monospaced Regular" size="48.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.15810689147159931">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.6644295302013423">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9966442953020134">
+                           <color>
+                              <Color red="0.8815789222717285" green="0.8424656987190247" blue="0.4122197926044464" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <CheckBox fx:id="mode2box" layoutX="552.0" layoutY="256.0" mnemonicParsing="false" onAction="#selectMode2" text="SAMPLE COLOR Output" textFill="#00ff6a">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="mode3box" layoutX="552.0" layoutY="291.0" mnemonicParsing="false" onAction="#selectMode3" text="RANDOM COLOR Output" textFill="#eca1ff">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </CheckBox>
+            <Line endX="314.0" layoutX="636.0" layoutY="336.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="314.0" layoutX="637.0" layoutY="525.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
+            <Text layoutX="631.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SELECTION SETTINGS" textAlignment="RIGHT" wrappingWidth="322.171875">
+               <font>
+                  <Font name="Monospaced Regular" size="35.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.15810689147159931">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.6644295302013423">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9295302013422818">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9966442953020134">
+                           <color>
+                              <Color red="0.9736841917037964" green="0.9688007831573486" blue="0.9150828719139099" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9736841917037964" green="0.9688007831573486" blue="0.9150828719139099" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Text layoutX="553.0" layoutY="577.0" strokeType="OUTSIDE" strokeWidth="0.0" text="THRESHOLD SETTINGS" wrappingWidth="383.41064453125">
+               <font>
+                  <Font name="Monospaced Regular" size="35.0" />
+               </font>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.15810689147159931">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.6644295302013423">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9295302013422818">
+                           <color>
+                              <Color green="1.0" blue="0.4156862795352936" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.9966442953020134">
+                           <color>
+                              <Color red="0.9736841917037964" green="0.9688007831573486" blue="0.9150828719139099" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9736841917037964" green="0.9688007831573486" blue="0.9150828719139099" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Text>
+            <Text fill="WHITE" layoutX="312.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MANIPULATE IMAGE" wrappingWidth="193.095703125">
+               <font>
+                  <Font name="Monospaced Regular" size="20.0" />
+               </font>
+            </Text>
+            <Line endX="100.0" endY="176.0" layoutX="419.0" layoutY="668.0" startX="100.0" startY="-126.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="100.0" endY="92.0" layoutX="863.0" layoutY="650.0" startX="100.0" startY="-114.0" stroke="WHITE" strokeWidth="2.0" />
+            <Text fill="#f7ff84" layoutX="1281.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LABELER" textAlignment="RIGHT" wrappingWidth="181.41064453125">
+               <font>
+                  <Font name="Monospaced Regular" size="35.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="1098.0" layoutY="836.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Made by Zalán Tóth (20102768)" textAlignment="RIGHT" wrappingWidth="366.095703125">
+               <font>
+                  <Font name="Monospaced Regular" size="20.0" />
+               </font>
+            </Text>
+            <Line endX="314.0" layoutX="1144.0" layoutY="792.0" startX="-150.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="100.0" endY="92.0" layoutX="692.0" layoutY="740.0" startX="161.0" startY="-127.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="151.0" endY="-13.0" layoutX="784.0" layoutY="738.0" startX="97.0" startY="-124.0" stroke="WHITE" strokeWidth="2.0" />
             </children>
         </AnchorPane>
     </children>

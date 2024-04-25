@@ -65,6 +65,115 @@ public class ImageData {
 
 	}
 
+	public static int getHue(int pixel) {
+		if (pixel != 0xFFFFFFFF) {
+			int red = (pixel >> 16) & 0xFF;
+			int green = (pixel >> 8) & 0xFF;
+			int blue = pixel & 0xFF;
+
+			float r = red / 255.0f;
+			float g = green / 255.0f;
+			float b = blue / 255.0f;
+
+			float max = Math.max(r, Math.max(g, b));
+			float min = Math.min(r, Math.min(g, b));
+			float delta = max - min;
+
+			float hue = 0.0f;
+
+			if (delta == 0) {
+				hue = 0;
+			} else if (max == r) {
+				hue = ((g - b) / delta) % 6;
+			} else if (max == g) {
+				hue = (b - r) / delta + 2;
+			} else if (max == b) {
+				hue = (r - g) / delta + 4;
+			}
+
+			hue *= 60; // convert to degrees
+
+			if (hue < 0) {
+				hue += 360;
+			}
+
+			return Math.round(hue);
+		}
+		return -1;
+	}
+
+	public void makeImageHue() {
+		int width = (int) imageToEdit.getWidth();
+		int height = (int) imageToEdit.getHeight();
+		PixelReader pr = imageToEdit.getPixelReader();
+		WritableImage wi = new WritableImage(width, height);
+		PixelWriter pw = wi.getPixelWriter();
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				int pixel = pr.getArgb(x, y);
+				int hue = getHue(pixel);
+				int rgb = hueToRGB(hue);
+				pw.setArgb(x, y, rgb);
+			}
+		}
+
+		imageToEdit = new ImageView(wi).getImage();
+	}
+
+	private int hueToRGB(int hue) {
+		float s = 1.0f; // saturation
+		float v = 1.0f; // brightness
+		float h = hue / 360.0f * 6;
+		int i = (int) h;
+		float f = h - i;
+		float p = v * (1 - s);
+		float q = v * (1 - f * s);
+		float t = v * (1 - (1 - f) * s);
+
+		float r = 0, g = 0, b = 0;
+		switch (i) {
+			case 0:
+				r = v;
+				g = t;
+				b = p;
+				break;
+			case 1:
+				r = q;
+				g = v;
+				b = p;
+				break;
+			case 2:
+				r = p;
+				g = v;
+				b = t;
+				break;
+			case 3:
+				r = p;
+				g = q;
+				b = v;
+				break;
+			case 4:
+				r = t;
+				g = p;
+				b = v;
+				break;
+			case 5:
+				r = v;
+				g = p;
+				b = q;
+				break;
+		}
+		int red = Math.round(r * 255);
+		int green = Math.round(g * 255);
+		int blue = Math.round(b * 255);
+		if (hue != -1) {
+			return (0xFF << 24) | (red << 16) | (green << 8) | blue;
+		} else {
+			return 0xFFFFFFFF;
+		}
+	}
+
 	private ImageData processImages(Image image) {
 		int width = (int) image.getWidth();
 		int height = (int) image.getHeight();

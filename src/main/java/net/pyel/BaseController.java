@@ -347,6 +347,25 @@ public class BaseController implements Initializable {
 		imageView.setImage(id.getImageToEdit());
 	}
 
+	public void makeHue() {
+
+		id.makeImageHue();
+
+		ip.setImage(id.getImageToEdit());
+		ip.processMe();
+		imageView.setImage(id.getImageToEdit());
+	}
+
+
+	public void resetImage() {
+
+		id.setImageToEdit(id.getOriginalImage());
+
+		ip.setImage(id.getImageToEdit());
+		ip.processMe();
+		imageView.setImage(id.getImageToEdit());
+	}
+
 	@FXML
 	public void selectAllPills() {
 
@@ -564,10 +583,10 @@ public class BaseController implements Initializable {
 			for (Pill pill : pillType.getPills().values()) {
 				pillCount++;
 				Rectangle r = getRectangleForPill(pill);
-				Label l = new Label(String.valueOf(pill.getTemporaryNumber()));
+				Label l = new Label(String.valueOf(pill.getTemporaryNumber() + 1));
 				l.setLayoutX(r.getX());
 				l.setLayoutY(r.getY());
-				Tooltip tooltip = new Tooltip("Name: " + pillType.getName() + "\n" + pillType.getPills().size() + " pills have this type." + "\nOrder in pilltype: " + pill.getNumber() + "\nOrder among all selected pills: " + pill.getTemporaryNumber() + "\nPixels: " + pill.getPixelUnits());
+				Tooltip tooltip = new Tooltip("Name: " + pillType.getName() + "\n" + pillType.getPills().size() + " pills have this type." + "\nOrder in pilltype: " + pill.getNumber() + "\nOrder among all selected pills: " + (pill.getTemporaryNumber() + 1) + "\nPixels: " + pill.getPixelUnits());
 				Tooltip.install(r, tooltip);
 
 				r.setOnMouseClicked(event -> {

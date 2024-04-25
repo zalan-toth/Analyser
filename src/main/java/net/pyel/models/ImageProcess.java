@@ -208,6 +208,7 @@ public class ImageProcess {
 		return (colorValue == colorInput);
 	}
 
+
 	public boolean thresholdColorCheck(int colorValue, int colorInput) {
 
 		int colorInputA = (colorInput >> 24) & 0xFF; //color we are looking for

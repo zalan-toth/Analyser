@@ -42,6 +42,81 @@ public class Labeler {
 		this.idSet = idSet;
 	}
 
+	public static int staticFind(int[] a, int id) {
+		// Check if the id is -1 or out of bounds, and return -1 immediately.
+		if (id == -1 || id >= a.length) {
+			return -1;
+		}
+
+		while (a[id] != id) {
+			// Additional check to prevent ArrayIndexOutOfBoundsException
+			// if a[id] is -1 or out of valid range (this depends on your logic)
+			if (a[id] == -1 || a[id] >= a.length) {
+				return -1;
+			}
+			id = a[id];
+		}
+		return id;
+	}
+
+	public static void processData(int[] data) {
+
+		for (int v = 0; v < data.length; v++) {
+			if (data[v] == -2) {
+
+
+				data[v] = v;
+				if (((v % 60) - 1) >= 0) { //60 is hardcoded width
+					if (data[(v - 1)] >= 0) {
+						data[v] = v - 1;
+					}
+				}
+				/*if (((v % width) + 1) < width) {
+					if (setToStoreRelation[(v + 1)] >= 0) {
+						setToStoreRelation[v + 1] = v;
+					}
+				}*/
+
+
+			} else {
+				data[v] = -1;
+			}
+		}
+	}
+
+	public static void staticUnion(int[] a, int p, int q) {
+
+		int rootP = find(a, p);
+		int rootQ = find(a, q);
+
+		if ((p != -1) && (q != -1) && (rootP != -1) && (rootQ != -1)) {
+			a[rootQ] = rootP; // The root of q is made reference the root of p
+		}
+	}
+
+	public static Integer calcPixelAmount(int[] arr) {
+		int amount = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] != -1) {
+				amount++;
+			}
+		}
+		return amount;
+	}
+
+	public static int newID(int[] idSet) {
+		int highestID = -1;
+		for (int v = 0; v < idSet.length; v++) {
+
+			if (idSet[v] > highestID) {
+				highestID = idSet[v];
+			}
+
+		}
+		highestID++;
+		return highestID;
+	}
+
 	/*private ArrayList<PillType> pillTypes = new ArrayList<>();
 
 		public Labeler(ArrayList<PillType> pillTypes) {
